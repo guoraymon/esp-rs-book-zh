@@ -1,47 +1,47 @@
-# Ecosystem Overview
+# 生态概览
 
-There are the following approaches to using Rust on Espressif chips:
+在乐鑫芯片上使用 Rust 有以下几种方法：
 
-- Using the `std` library, a.k.a. Standard library.
-- Using the `core` library (`no_std`), a.k.a. bare metal development.
+- 使用 std 库，又名标准库。
+- 使用核心库 (no_std)，也就是裸机开发。
 
-Both approaches have their advantages and disadvantages, so you should make a decision based on your project's needs. This chapter contains an overview of the two approaches:
+这两种方法各有利弊，因此您应该根据项目的需要做出决定。本章包含对这两种方法的概述：
 
-- [Using the Standard Library (`std`)][rust-esp-book-std]
-- [Developing on Bare Metal (`no_std`)][rust-esp-book-no-std]
+- [使用标准库 (std)][rust-esp-book-std]
+- [在裸机上开发 (no_std)][rust-esp-book-no-std]
 
 [rust-esp-book-std]: ./using-the-standard-library.md
 [rust-esp-book-no-std]: ./bare-metal.md
 
-See also the comparison of the different runtimes in [The Embedded Rust Book][embedded-rust-book-intro-std].
+另请参阅 [The Embedded Rust Book][embedded-rust-book-intro-std] 中不同运行时的比较。
 
 [embedded-rust-book-intro-std]: https://docs.rust-embedded.org/book/intro/no-std.html#a-no_std-rust-environment
 
-The [esp-rs organization] on GitHub is home to a number of repositories related to running Rust on Espressif chips. Most of the required crates have their source code hosted here.
+GitHub 上的 [esp-rs 组织] 拥有许多与在乐鑫芯片上运行 Rust 相关的存储库。大多数所需的 crate 都在这里托管了它们的源代码。
 
-> A note on the repository naming convention
+> 关于存储库命名约定的注释
 >
-> In the [esp-rs organization] we use the following wording:
+> 在 [esp-rs 组织]中，我们使用以下写法：
 >
-> - Repositories starting with `esp-idf-` are focused on `std` approach. E.g. `esp-idf-hal`
-> - Repositories starting with `esp-` are focused on `no_std` approach. E.g. `esp-hal`
+> - 以 `esp-idf-` 开头的存储库专注于 `std` 方法。例如：`esp-idf-hal`
+> - 以 `esp-` 开头的存储库专注于 `no_std` 方法。例如：`esp-hal`
 >
-> It is easy to remember as follows:
+> 很容易记住如下：
 >
-> - `no_std` works on top of bare metal, so `esp-` is an Espressif chip
->- `std`, apart from bare metal, also needs an [additional layer](https://github.com/espressif/esp-idf), which is `esp-idf-`
+>- `no_std` 在裸机之上工作，所以 `esp-` 是乐鑫芯片
+>- `std` 除了裸机，还需要[附加层](https://github.com/espressif/esp-idf), 则是 `esp-idf-`
 
-[esp-rs organization]: https://github.com/esp-rs/
+[esp-rs 组织]: https://github.com/esp-rs/
 
-## Support for Espressif Products
+## 支持的乐鑫产品
 
-> **Notes**:
+> **笔记**:
 >
-> - ✅ - The feature is implemented or supported
-> - ⏳ - The feature is under development
-> - ❌ - The feature is not supported
+> - ✅ - 该功能已实施或支持
+> - ⏳ - 该功能正在开发中
+> - ❌ - 不支持该功能
 
-| Chip     | `std` | `no_std` |
+| 芯片     | `std` | `no_std` |
 | -------- | :---: | :------: |
 | ESP32    |   ✅   |    ✅     |
 | ESP32-C2 |   ⏳   |    ✅     |
@@ -52,8 +52,8 @@ The [esp-rs organization] on GitHub is home to a number of repositories related 
 | ESP32-H2 |   ⏳   |    ⏳     |
 | ESP8266  |   ❌   |    ✅     |
 
-The products supported in certain circumstances will be called _supported Espressif products_ throughout the book.
+在某些情况下支持的产品将在整本书中称为支持的 _乐鑫产品_。
 
-As of now, the Espressif products supported by the esp-idf framework are the ones supported for Rust `std` development. For details on different versions of esp-idf and support of Espressif chips, see [this table][esp-idf-release-compatibility].
+截至目前，esp-idf 框架支持的乐鑫产品是支持 Rust `std` 开发的产品。不同版本的esp-idf以及对乐鑫芯片的支持情况见[此表][esp-idf-release-compatibility]。
 
 [esp-idf-release-compatibility]: https://github.com/espressif/esp-idf#esp-idf-release-and-soc-compatibility

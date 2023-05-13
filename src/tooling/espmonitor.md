@@ -1,6 +1,6 @@
 # espmonitor
 
-The [esp-rs/espmonitor] repository contains two crates, `cargo-espmonitor` and `espmonitor`.
+[esp-rs/espmonitor] 存储库包含两个 crate，`cargo-espmonitor` 和 `espmonitor`。
 
 ## cargo-espmonitor
 

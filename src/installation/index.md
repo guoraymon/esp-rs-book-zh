@@ -1,17 +1,17 @@
-# Setting Up a Development Environment
+# 设置开发环境
 
-At the moment, Espressif SoCs are based on two different architectures: `RISC-V` and `Xtensa`. Both architectures support `std` and `no_std` approaches.
+目前，乐鑫 SoC 基于两种不同的架构：`RISC-V` 和 `Xtensa`。两种架构都支持 `std` 和 `no_std` 方法。
 
-To set up the development environment, do the following:
+要设置开发环境，请执行以下操作：
 
-1. [Install Rust][install-rust]
-2. Install requirements based on your target(s)
-    - [`RISC-V` targets only][risc-v-targets]
-    - [`RISC-V` and `Xtensa` targets][rics-v-xtensa-targets]
+1. [安装 Rust][install-rust]
+2. 根据您的目标安装
+    - [仅限 `RISC-V` 目标][risc-v-targets]
+    - [`RISC-V` 和 `Xtensa`][rics-v-xtensa-targets]
 
-As mentioned in the installation procedures below, for `std` development also don't forget to install [`std` Development Requirements][rust-esp-book-std-requirements].
+正如下面安装过程中提到的，对于 `std` 开发不要忘记安装 [`std` 开发要求][rust-esp-book-std-requirements].
 
-Please note that you can host the development environment in a [container][use-containers].
+请注意，您可以在[容器][use-containers]中托管开发环境。
 
 
 [install-rust]: #install-rust
@@ -20,16 +20,16 @@ Please note that you can host the development environment in a [container][use-c
 [use-containers]: #using-containers
 
 
-## Install Rust
+## 安装 Rust
 
-Make sure you have [Rust][rust-lang-org] installed. If not, see the instructions on the [rustup][rustup.rs-website] website.
+确保安装了 [Rust][rust-lang-org]。如果没有，请参阅 [rustup][rustup.rs-website] 网站上的说明。
 
-See also [alternative installation methods][rust-alt-installation].
+另请参阅。 [替代安装方法][rust-alt-installation].
 
-> **Note**: If you run Windows on your host machine, make sure you have installed one of the ABIs listed below. For more details, see the [Windows][rustup-book-windows] chapter in The rustup book.
+> **注**: 如果您在主机上运行 Windows，请确保您已经安装了下面列出的 ABI 之一。有关更多详细信息，请参阅 The rustup 一书中的 [Windows][rustup-book-windows] 一章。
 >
-> - **MSVC**: Recommended ABI, included in the list of `rustup` default requirements. Use it for interoperability with the software produced by Visual Studio.
-> - **GNU**: ABI used by the GCC toolchain. Install it yourself for interoperability with the software built with the MinGW/MSYS2 toolchain.
+> - **MSVC**: 推荐的 ABI，包含在 `rustup` 默认要求列表中。将其用于与 Visual Studio 生成的软件的互操作性。
+> - **GNU**: GCC 工具链使用的 ABI。自行安装，以便与使用 MinGW/MSYS2 工具链构建的软件进行互操作。
 
 
 [rustup.rs-website]: https://rustup.rs/
@@ -38,11 +38,11 @@ See also [alternative installation methods][rust-alt-installation].
 [rust-lang-org]: https://www.rust-lang.org/
 
 
-## RISC-V targets only
+## 仅限 RISC-V 目标
 
-To build Rust applications for the Espressif chips based on `RISC-V` architecture, do the following:
+要基于 `RISC-V` 架构为乐鑫芯片构建 Rust 应用程序，请执行以下操作：
 
-1. Install the [`nightly`][rustup-book-channel-nightly] toolchain with the `rust-src` [component][rustup-book-components]:
+1. 使用 `rust-src` [组件][rustup-book-components] 安装 [`nightly 工具链`][rustup-book-channel-nightly]:
 
     ```bash
     rustup toolchain install nightly --component rust-src
@@ -52,19 +52,19 @@ To build Rust applications for the Espressif chips based on `RISC-V` architectur
 [rustup-book-components]: https://rust-lang.github.io/rustup/concepts/components.html
 
 
-2. Set the target:
-    - For `no_std` (bare-metal) applications, run:
+2. 设定目标：
+    - 对于 `no_std`（裸机）应用程序，运行：
 
       ```bash
-      rustup target add riscv32imc-unknown-none-elf # For ESP32-C2 and ESP32-C3
-      rustup target add riscv32imac-unknown-none-elf # For ESP32-C6 and ESP32-H2
+      rustup target add riscv32imc-unknown-none-elf # 适用于 ESP32-C2 和 ESP32-C3
+      rustup target add riscv32imac-unknown-none-elf # 适用于 ESP32-C6 和 ESP32-H2
       ```
 
-      This target is currently [Tier 2][rust-lang-book--platform-support-tier2]; note the different flavors of `riscv32` target in Rust covering different [`RISC-V` extensions][wiki-riscv-standard-extensions].
+      这个目标目前是 [Tier 2][rust-lang-book--platform-support-tier2]，请注意 Rust 中 `riscv32` 目标的不同风格，涵盖不同的 [`RISC-V` 扩展][wiki-riscv-standard-extensions]。
 
-    - For `std` applications, use the target `riscv32imc-esp-espidf`.
+    - 对于 `std` 应用程序，使用 `riscv32imc-esp-espidf`。
 
-      Since this target is currently [Tier 3][rust-lang-book--platform-support-tier3], it does not have pre-built objects distributed through `rustup`, and **it does not need to be installed** as the `no_std` target.
+      由于此目标当前是 [Tier 3][rust-lang-book--platform-support-tier3]，因此它没有通过 `rustup` 分发的预构建对象，并且 **不需要** 作为 `no_std` 目标安装.
 
 
 [rust-lang-book--platform-support-tier2]: https://doc.rust-lang.org/nightly/rustc/platform-support.html#tier-2
@@ -72,10 +72,10 @@ To build Rust applications for the Espressif chips based on `RISC-V` architectur
 [rust-lang-book--platform-support-tier3]: https://doc.rust-lang.org/nightly/rustc/platform-support.html#tier-3
 
 
-3. To build `std` projects, you also need to install:
-    - [`LLVM`][llvm-website] compiler infrastructure
-    - Other [`std` development requirements][rust-esp-book-std-requirements]
-    - In your project's file `.cargo/config.toml`, add the unstable Cargo [feature][cargo-book-unstable-features] `-Z build-std`. Our [template projects][rust-esp-book-write-app-generate-project] that are discussed later in this book already include this.
+3. 要构建 `std` 项目，您还需要安装：
+    - [`LLVM`][llvm-website] 编译器基础设施 
+    - 其他 [`std` 开发要求][rust-esp-book-std-requirements]
+    - 在项目文件 `.cargo/config.toml`, 添加不稳定的 Cargo [feature][cargo-book-unstable-features] `-Z build-std`. 本书后面讨论的[模板项目][rust-esp-book-write-app-generate-project]已经包含了它。
 
 
 [llvm-website]: https://llvm.org/
@@ -84,60 +84,60 @@ To build Rust applications for the Espressif chips based on `RISC-V` architectur
 [rust-esp-book-write-app-generate-project]: ../writing-your-own-application/generate-project-from-template.md
 
 
-Now you should be able to build and run projects on the Espressif's `RISC-V` chips.
+现在您应该能够在乐鑫的 `RISC-V` 芯片上构建和运行项目。
 
 
-## RISC-V and Xtensa targets
+## RISC-V 和 Xtensa 目标
 
-[`espup`][espup-github] is a tool that simplifies installing and maintaining the components required to develop Rust applications for the `Xtensa` and `RISC-V` architectures.
+[`espup`][espup-github] 是一个工具，可简化为 `Xtensa` 和 `RISC-V` 架构开发 Rust 应用程序所需组件的安装和维护。
 
 [espup-github]: https://github.com/esp-rs/espup
 
-To install `espup`, run:
+要安装 `espup`, 请运行:
 ```sh
 cargo install espup
 ```
 
-You can also directly download pre-compiled [release binaries] or use [cargo-binstall].
+您也可以直接下载预编译的[发布二进制文件]或使用 [cargo-binstall].
 
 [release binaries]: https://github.com/esp-rs/espup/releases
 [cargo-binstall]: https://github.com/cargo-bins/cargo-binstall
 
-Once `espup` is installed, do the following:
+安装 `espup` 后，执行以下操作：
 
-1. Install all the necessary tools to develop Rust applications for all supported Espressif targets by running:
+1. 安装所有必要的工具，通过运行以下命令为所有支持的乐鑫目标开发 Rust 应用程序：
     ```sh
     espup install
     ```
 
-    `espup` will create an export file that contains some environment variables required to build projects:
+    `espup` 将创建一个导出文件，其中包含构建项目所需的一些环境变量：
 
-    - Unix systems - `$HOME/export-esp.sh`
+    - Unix 系统 - `$HOME/export-esp.sh`
     - Windows - `%USERPROFILE%\export-esp.ps1`
 
-2. On Unix systems, make sure to source this file in every terminal before building any application: `. $HOME/export-esp.sh`
-    > On Windows systems, no need to source the file. It is only created to show the modified environment variables.
+2. 在 Unix 系统上，确保在构建任何应用程序之前在每个终端中 source 此文件：`. $HOME/export-esp.sh`
+    > 在 Windows 系统上，无需 source 该文件。它只是为了显示修改后的环境变量而创建的。
 
+ß
+运行 `espup install` 后：
 
-After running `espup install`:
+- `no_std` （裸机）应用程序应该开箱即用
+- `std` 应用程序需要额外的 [`std` 开发要求][rust-esp-book-std-requirements]
 
-- `no_std` (bare-metal) applications should work out of the box
-- `std` applications require additional software covered in [`std` Development Requirements][rust-esp-book-std-requirements]
+### 什么是 espup 安装
 
-### What espup Installs
+为了启用对乐鑫目标的支持, `espup` 安装了以下工具：
 
-To enable support for Espressif targets, `espup` installs the following tools:
+- 支持乐鑫目标的乐鑫 Rust 分叉
+- 支持 `RISC-V` 目标的`nightly` 工具链
+- 支持 `Xtensa` 目标的 `LLVM` [分叉][llvm-github-fork]
+- 链接最终二进制文件的 [GCC 工具链][gcc-toolchain-github-fork]
 
-- Espressif Rust fork with support for Espressif targets
-- `nightly` toolchain with support for `RISC-V` targets
-- `LLVM` [fork][llvm-github-fork] with support for `Xtensa` targets
-- [GCC toolchain][gcc-toolchain-github-fork] that links the final binary
+分叉编译器可以与标准 Rust 编译器共存，允许两者都安装在您的系统上。使用任何可用的[覆盖方法][rustup-overrides]时，将调用这个分支编译器。
 
-The forked compiler can coexist with the standard Rust compiler, allowing both to be installed on your system. The forked compiler is invoked when using any of the available [overriding methods][rustup-overrides].
-
-> **Note**: We are making efforts to upstream our forks
-> 1. Changes in `LLVM` fork. Already in progress, see the status in this [tracking issue][llvm-github-fork-upstream issue].
-> 2. Rust compiler forks. If `LLVM` changes are accepted, we will proceed with the Rust compiler changes.
+> **注**: 我们正在努力将我们的分支合并到上游项目中。
+> 1. `LLVM` 分支的变化。已经在进行中，请查看此[问题跟踪][llvm-github-fork-upstream issue]中的状态。
+> 2. Rust 编译器分叉。如果 `LLVM` 的更改被接受，我们将继续进行 Rust 编译器的修改。
 
 
 [llvm-github-fork]: https://github.com/espressif/llvm-project
@@ -146,27 +146,27 @@ The forked compiler can coexist with the standard Rust compiler, allowing both t
 [llvm-github-fork-upstream issue]: https://github.com/espressif/llvm-project/issues/4
 
 
-### Other installation methods for Xtensa targets
+### Xtensa 目标的其他安装方法
 
-- Using [esp-rs/rust-build] installation scripts. This was the recommended way in the past, but now the installation scripts are feature frozen, and all new features will only be included in `espup`. See the repository README for instructions.
-- Building the Rust compiler with `Xtensa` support from source. This process is computationally expensive and can take one or more hours to complete depending on your system. It is not recommended unless there is a major reason to go for this approach. Here is the repository to build it from source: [esp-rs/rust repository].
+- 使用 [esp-rs/rust-build] 安装脚本。这是过去推荐的方式，但现在安装脚本已冻结功能，所有新功能只会包含在 espup 中。有关说明，请参阅存储库自述文件。
+- 使用来自源代码的 `Xtensa` 支持构建 Rust 编译器。此过程的计算成本很高，可能需要一个或多个小时才能完成，具体取决于您的系统。除非有采用这种方法的主要原因，否则不推荐这样做。这是从源代码构建它的存储库： [esp-rs/rust 存储库]。
 
 [esp-rs/rust-build]: https://github.com/esp-rs/rust-build#download-installer-in-bash
 [esp-rs/rust repository]: https://github.com/esp-rs/rust
 
 
-## `std` Development Requirements
+## `std` 开发要求
 
-Regardless of the target architecture, make sure you have the following required tools installed to build [`std`][rust-esp-book-overview-std] applications:
+无论目标架构如何，请确保您安装了以下构建 [`std`][rust-esp-book-overview-std] 应用程序所需的工具：
 
-- [`python`][python-website-download]: Required by ESP-IDF
-- [`git`][git-website-download]: Required by ESP-IDF
-- [`ldproxy`][embuild-github-ldproxy] binary crate: A tool that forwards linker arguments to the actual linker that is also given as an argument to `ldproxy`. Install it by running:
+- [`python`][python-website-download]: ESP-IDF 要求
+- [`git`][git-website-download]: ESP-IDF 要求
+- [`ldproxy`][embuild-github-ldproxy]: 一种将链接器参数转发给实际链接器的工具，该链接器也作为参数提供给 `ldproxy`。安装方法：
     ```sh
     cargo install ldproxy
     ```
 
-The std runtime uses [ESP-IDF][esp-idf-github] (Espressif IoT Development Framework) as hosted environment but, users do not need to install it. ESP-IDF is automatically downloaded and installed by [esp-idf-sys][esp-idf-sys-github], a crate that all std projects need to use, when building a std application.
+std 运行时使用 [ESP-IDF][esp-idf-github] (乐鑫 IoT 开发框架) 作为托管环境，但用户不需要安装它。ESP-IDF 由[esp-idf-sys][esp-idf-sys-github] 自动下载和安装, 这是一个所有 std 项目在构建 std 应用程序时都需要使用的 crate。
 
 
 [rust-esp-book-overview-std]: ../overview/using-the-standard-library.md
@@ -177,23 +177,23 @@ The std runtime uses [ESP-IDF][esp-idf-github] (Espressif IoT Development Framew
 [esp-idf-github]: https://github.com/espressif/esp-idf
 
 
-## Using Containers
+## 使用容器
 
-Instead of installing directly on your local system, you can host the development environment inside a container. Espressif provides the [idf-rust] image that supports both `RISC-V` and `Xtensa` target architectures and enables both `std` and `no_std` development.
+您可以在容器中托管开发环境，而不是直接安装在您的本地系统上。乐鑫提供 [idf-rust] 镜像，支持 `RISC-V` 和 `Xtensa` 目标架构，支持 `std` 和 `no_std` 开发。
 
-You can find numerous tags for `linux/arm64`, and `linux/amd64` platforms.
+您可以找到许多适用于 `linux/arm64` 和 `linux/amd64` 平台的标签。
 
-For each Rust release, we generate the tag with the following naming convention:
+对于每个 Rust 版本，我们使用以下命名约定生成标签：
 
 - `<chip>_<rust-toolchain-version>`
-  - For example, `esp32_1.64.0.0` contains the ecosystem for developing `std`, and `no_std` applications for `ESP32` with the `1.64.0.0` Xtensa Rust toolchain.
+  - 例如，`esp32_1.64.0.0` 包含用于使用 `1.64.0.0` Xtensa Rust 工具链为 ESP32 开发 `std` 和 `no_std` 应用程序的生态系统。
 
-There are special cases
+有特殊情况
 
-- `<chip>` can be `all` which indicates compatibility with all Espressif targets
-- `<rust-toolchain-version>` can be `latest` which indicates the latest release of the `Xtensa` Rust toolchain
+- `<chip>` 可以是 `all`，表示与所有乐鑫目标兼容
+- `<rust-toolchain-version>` 可以是 `latest`，表示 `Xtensa Rust` 工具链的最新版本
 
-Depending on your operating system, you can choose any container runtime, such as [Docker], [Podman], or [Lima].
+根据您的操作系统，您可以选择任何容器运行时，例如 [Docker]、[Podman] 或 [Lima]。
 
 
 [Docker]: https://www.docker.com/

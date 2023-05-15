@@ -1,12 +1,11 @@
-# Writing Your Own Application
+# 编写你自己的应用程序
 
-With the appropriate Rust compiler and toolchain installed, you're now ready to create an application.
+当你安装了合适的Rust编译器和工具链之后，你就可以开始创建应用程序了。
 
-There are essentially two ways to do this: generating from a template or starting from scratch using only `cargo`.
+基本上有两种方法可以做到这一点：从模板生成或仅使用`cargo`从头开始。
 
-We strongly recomend starting projects from templates as it gives you a configured project saving all the time that would require
-to setup a project started from scratch with `cargo`.
+我们强烈建议从模板开始项目，因为它为你配置了一个项目，节省了从头开始使用`cargo`设置项目所需的所有时间。
 
-> If you are looking for inspiration, check the [Projects section of our Awesome ESP Rust repository]
+> 如果你正在寻找灵感，请查看我们 Awesome ESP Rust 仓库的 [Projects 部分]
 
-[Projects section of our Awesome ESP Rust repository]: https://github.com/esp-rs/awesome-esp-rust#projects
+[Projects 部分]: https://github.com/esp-rs/awesome-esp-rust#projects

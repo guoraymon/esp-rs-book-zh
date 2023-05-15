@@ -1,8 +1,8 @@
 # Blinky
 
-Let's see how to create the iconic _Blinky_.
+让我们看看如何创建标志性的 _Blinky_。
 
-Change the code in `main.rs` to this
+将 `main.rs` 中的代码改成这样
 
 ```rust,ignore
 #![no_std]
@@ -50,17 +50,17 @@ fn main() -> ! {
 }
 ```
 
-We need two new types in scope: [`IO`] and [`Delay`]
+我们需要两个新类型：[`IO`] 和 [`Delay`]。
 
-On [ESP32-C3-DevKit-RUST-1] there is a regular [LED connected to GPIO 7]. If you use another board consult the data-sheet.
+在 [ESP32-C3-DevKit-RUST-1] 上，有一个常规的 [LED 连接到 GPIO 7]。如果你使用其他开发板，请参考其数据手册。
 
-> Note that most of the development boards from Espressif today use an addressable LED which works differently and is beyond the scope of this book. In that case, you can also connect a regular LED to some of the free pins (and don't forget to add a resistor).
+> 请注意，Espressif 大多数开发板现在使用一种工作方式不同的可寻址 LED，它超出了本书的范围。在这种情况下，您也可以将常规 LED 连接到某些空闲引脚（不要忘记加电阻）。
 
-Here we see that we can drive the pin `high`, `low`, or `toggle` it.
+在这里，我们可以将引脚设置为高电平、低电平或切换它。
 
-We also see that the HAL offers a way to delay execution.
+我们还看到 HAL 提供了一种延迟执行的方法。
 
 [ESP32-C3-DevKit-RUST-1]:  https://github.com/esp-rs/esp-rust-board
-[LED connected to GPIO 7]: https://github.com/esp-rs/esp-rust-board#pin-layout
+[LED 连接到 GPIO 7]: https://github.com/esp-rs/esp-rust-board#pin-layout
 [`IO`]: https://docs.rs/esp32c3-hal/0.2.0/esp32c3_hal/gpio/struct.IO.html
 [`Delay`]: https://docs.rs/esp32c3-hal/0.2.0/esp32c3_hal/struct.Delay.html

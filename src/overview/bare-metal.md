@@ -1,4 +1,4 @@
-# 在裸机上开发 (`no_std`)
+# 裸机开发 (`no_std`)
 
 嵌入式 Rust 开发人员可能更熟悉使用 `no_std`；它不使用 `std`（[Rust 标准库][rust-lib-std] ）而是使用一个子集，即核心库。 [The Embedded Rust Book][embedded-rust-book] 对此有很大的[介绍][embedded-rust-book-no-std] 。
 

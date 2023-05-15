@@ -1,27 +1,27 @@
-# Generating Projects from Templates
+# 从模板生成项目
 
-We currently maintin two template repositories:
+我们目前维护两个模板仓库：
 
-- [esp-template] - `no_std` template.
-- [esp-idf-template] - `std` template.
+- [esp-template] - `no_std` 模板。
+- [esp-idf-template] - `std` 模板。
 
-Both templates are based on [cargo-generate], a tool that allows you to create a new project based on some existing template. In our case [esp-idf-template] or [esp-template] can be used to generate an application with all the required configuration and dependencies.
+这两个模板都基于 [cargo-generate]，这是一个允许你基于现有模板创建新项目的工具。在我们的情况下，可以使用 [esp-idf-template] 或 [esp-template] 生成具有所有必需配置和依赖项的应用程序。
 
-`cargo generate` can be installed by running:
+可以通过运行以下命令安装 `cargo generate`：
 
 ```shell
 cargo install cargo-generate
 ```
 
-When the `cargo generate` subcommand is invoked, you will be prompted to answer a number of questions regarding the target of your application. Upon completion of this process you will have a buildable project with all the correct configuration.
+当调用 `cargo generate` 子命令时，你将被提示回答关于你的应用程序目标的一系列问题。完成此过程后，你将拥有一个可构建的项目，具有所有正确的配置。
 
-The generated application can be built as normal using the appropriate toolchain and target simply by running `cargo build` when using either templates.
+使用任何一个模板，生成的应用程序可以像正常情况下一样使用适当的工具链和目标构建，只需运行 `cargo build` 即可。
 
-Using `cargo run` will compile the project, flash it, and open a serial monitor with our chip.
+使用 `cargo run` 将编译项目，将其烧录，并打开我们的芯片的串行监视器。
 
 ## esp-idf-template
 
-When using the Rust standard library (`std`) you can use the [esp-idf-template] template, which will look something like:
+当使用 Rust 标准库 (`std`) 时，可以使用 [esp-idf-template] 模板，它看起来像这样：
 
 ```shell
 $ cargo generate --git https://github.com/esp-rs/esp-idf-template cargo
@@ -47,11 +47,11 @@ $ cargo generate --git https://github.com/esp-rs/esp-idf-template cargo
 ✨   Done! New project created /home/alice/esp-rust-app
 ```
 
-See [Understanding esp-idf-template] for more details on the template project.
+有关模板项目的更多详细信息，请参见 [了解 esp-idf-template]。
 
 ## esp-template
 
-For bare-metal applications (`no_std`) you can instead use the [esp-template] template:
+对于裸机应用程序（`no_std`），您可以使用 [esp-template] 模板：
 
 ```shell
 cargo generate --git https://github.com/esp-rs/esp-template
@@ -76,29 +76,29 @@ cargo generate --git https://github.com/esp-rs/esp-template
 ✨   Done! New project created /home/alice/esp-rust-app
 ```
 
-See [Understanding esp-template] for more details on the template project.
+有关模板项目的更多详细信息，请参见 [了解 esp-template]。
 
-### Using Dev Containers in the templates
+### 在模板中使用开发容器
 
-Both template repositories have a prompt for Dev Containers support, when using Dev Containers in the templates it will add support for:
+在两个模板仓库中，都有对于开发容器支持的提示。使用开发容器可以添加对以下工具的支持：
 
-- [VS Code Dev Containers]
+- [VS Code 开发容器]
 - [GitHub Codespaces]
 - [Gitpod]
 
-Dev Containers use the `idf-rust` container image that was explained in the [Using Container section of the Installing Rust chapter] and provide an environment ready to develop Rust applications for Espressif chips with no installation required. Dev Containers also have integration with [Wokwi simulator], to simulate the project, and allow flashing from the container using [web flash].
+开发容器使用 `idf-rust` 容器镜像，该容器镜像在 Rust 安装章节的 [使用容器部分] 中有介绍，并且为开发乐鑫芯片的 Rust 应用程序提供了一个无需安装的开发环境。开发容器还与 [Wokwi 模拟器] 集成，可以在容器内模拟项目，并且使用 [Web Flash] 进行烧录。
 
-For more details about on Dev Containers, see [Dev Container section of the template Readme].
+更多有关开发容器的详细信息，请参阅[模板自述文件中的开发容器部分]。
 
 [cargo-generate]: https://github.com/cargo-generate/cargo-generate
 [esp-idf-template]: https://github.com/esp-rs/esp-idf-template
 [esp-template]: https://github.com/esp-rs/esp-template
-[VS Code Dev Containers]: https://code.visualstudio.com/docs/remote/containers#_quick-start-open-an-existing-folder-in-a-container
+[VS Code 开发容器]: https://code.visualstudio.com/docs/remote/containers#_quick-start-open-an-existing-folder-in-a-container
 [GitHub Codespaces]: https://docs.github.com/en/codespaces/developing-in-codespaces/creating-a-codespace
 [Gitpod]: https://www.gitpod.io
-[Using Container section of the Installing Rust chapter]: ../installation/index.md#using-containers
-[Wokwi simulator]: https://wokwi.com/
+[使用容器部分]: ../installation/index.md#使用容器
+[Wokwi 模拟器]: https://wokwi.com/
 [web flash]: https://github.com/bjoernQ/esp-web-flash-server
-[Dev Container section of the template Readme]: https://github.com/esp-rs/esp-template/tree/main/docs#dev-containers
-[Understanding esp-template]: ./no-std-applications/understanding-esp-template.md
-[Understanding esp-idf-template]: ./std-applications/understanding-esp-idf-template.md
+[模板自述文件中的开发容器部分]: https://github.com/esp-rs/esp-template/tree/main/docs#dev-containers
+[了解 esp-template]: ./no-std-applications/understanding-esp-template.md
+[了解 esp-idf-template]: ./std-applications/understanding-esp-idf-template.md

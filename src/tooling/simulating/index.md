@@ -1,7 +1,7 @@
-# Simulating
+# 模拟
 
-Simulating projects can be very handy. It allows users to test projects using CI, try projects without having hardware available, and many other scenarios.
+模拟项目非常方便。它允许用户使用 CI 测试项目，在没有硬件的情况下尝试项目，以及许多其他场景。
 
-At the moment, there are a few ways of simulating Rust projects on Espressif chips, all of them have some limitations, but it's quickly evolving and getting better every day.
+目前，有几种模拟 Rust 项目在乐鑫芯片上的方法，它们都有一些限制，但是它们正在快速发展，并且每天变得更好。
 
-In this chapter, we will discuss the different ways of simulation that are available.
+在本章中，我们将讨论可用的不同模拟方式。

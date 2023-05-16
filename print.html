@@ -1,0 +1,1636 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The Rust on ESP Book 中文版</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="使用 Rust 编程语言开发 Espressif SoC 和模块的综合指南">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="overview/index.html"><strong aria-hidden="true">2.</strong> 生态概述</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="overview/using-the-standard-library.html"><strong aria-hidden="true">2.1.</strong> 使用标准库 (std)</a></li><li class="chapter-item expanded "><a href="overview/bare-metal.html"><strong aria-hidden="true">2.2.</strong> 裸机开发 (no_std)</a></li></ol></li><li class="chapter-item expanded "><a href="installation/index.html"><strong aria-hidden="true">3.</strong> 设置开发环境</a></li><li class="chapter-item expanded "><a href="tooling/index.html"><strong aria-hidden="true">4.</strong> 工具</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tooling/text-editors-and-ides.html"><strong aria-hidden="true">4.1.</strong> 文本编辑器和 IDE</a></li><li class="chapter-item expanded "><a href="tooling/espflash.html"><strong aria-hidden="true">4.2.</strong> espflash</a></li><li class="chapter-item expanded "><a href="tooling/espmonitor.html"><strong aria-hidden="true">4.3.</strong> espmonitor</a></li><li class="chapter-item expanded "><a href="tooling/debugging/index.html"><strong aria-hidden="true">4.4.</strong> 调试</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tooling/debugging/probe-rs.html"><strong aria-hidden="true">4.4.1.</strong> probe-rs</a></li><li class="chapter-item expanded "><a href="tooling/debugging/openocd.html"><strong aria-hidden="true">4.4.2.</strong> OpenOCD</a></li><li class="chapter-item expanded "><a href="tooling/debugging/vscode-debugging.html"><strong aria-hidden="true">4.4.3.</strong> 在 Visual Studio Code 上调试</a></li></ol></li><li class="chapter-item expanded "><a href="tooling/simulating/index.html"><strong aria-hidden="true">4.5.</strong> 模拟</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="tooling/simulating/wokwi.html"><strong aria-hidden="true">4.5.1.</strong> Wokwi</a></li><li class="chapter-item expanded "><a href="tooling/simulating/qemu.html"><strong aria-hidden="true">4.5.2.</strong> QEMU</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="writing-your-own-application/index.html"><strong aria-hidden="true">5.</strong> 编写您自己的应用程序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="writing-your-own-application/generate-project-from-template.html"><strong aria-hidden="true">5.1.</strong> 从模板生成项目</a></li><li class="chapter-item expanded "><a href="writing-your-own-application/no-std-applications/index.html"><strong aria-hidden="true">5.2.</strong> 编写 no_std 应用程序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="writing-your-own-application/no-std-applications/understanding-esp-template.html"><strong aria-hidden="true">5.2.1.</strong> 了解 esp-template</a></li><li class="chapter-item expanded "><a href="writing-your-own-application/no-std-applications/hello-world.html"><strong aria-hidden="true">5.2.2.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="writing-your-own-application/no-std-applications/panic.html"><strong aria-hidden="true">5.2.3.</strong> Panic!</a></li><li class="chapter-item expanded "><a href="writing-your-own-application/no-std-applications/blinky.html"><strong aria-hidden="true">5.2.4.</strong> Blinky</a></li><li class="chapter-item expanded "><a href="writing-your-own-application/no-std-applications/button.html"><strong aria-hidden="true">5.2.5.</strong> 检测按钮按下</a></li><li class="chapter-item expanded "><a href="writing-your-own-application/no-std-applications/interrupt.html"><strong aria-hidden="true">5.2.6.</strong> 使用中断检测按钮按下</a></li></ol></li><li class="chapter-item expanded "><a href="writing-your-own-application/std-applications/index.html"><strong aria-hidden="true">5.3.</strong> 编写 std 应用程序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="writing-your-own-application/std-applications/understanding-esp-idf-template.html"><strong aria-hidden="true">5.3.1.</strong> 了解 esp-idf-template</a></li><li class="spacer"></li></ol></li></ol></li><li class="chapter-item expanded "><a href="misc/troubleshooting.html">附录 A: 故障排查</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust on ESP Book 中文版</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/guoraymon/esp-rs-book-zh" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="简介"><a class="header" href="#简介">简介</a></h1>
+<p>本书的目标是提供有关在 <a href="https://espressif.com/">乐鑫</a> 设备上使用 <a href="https://www.rust-lang.org/">Rust 编程语言</a>的综合指南。</p>
+<p>对这些设备的 Rust 支持仍在进行中，并且进展迅速。因此，本文档的某些部分可能已过时或在阅读之间发生巨大变化。</p>
+<p>有关 ESP 上 Rust 的相关工具和库，请参阅 GitHub 上的 <a href="https://github.com/esp-rs/">esp-rs 组织</a>。该组织由乐鑫员工和社区成员管理。</p>
+<blockquote>
+<p><strong>关于设备支持的说明</strong></p>
+<p>本书内容仅适用于ESP32系列设备；这包括：</p>
+<ul>
+<li>ESP32 系列</li>
+<li>ESP32-C 系列</li>
+<li>ESP32-S 系列</li>
+<li>ESP32-H 系列</li>
+</ul>
+<p>ESP8266 系列不在本书讨论范围之内。 ESP8266 系列的 Rust 支持有限，乐鑫未提供官方支持。</p>
+</blockquote>
+<h2 id="本书适合谁"><a class="header" href="#本书适合谁">本书适合谁</a></h2>
+<p>本书适用于具有一定 Rust 经验的人，并且还假定读者具有嵌入式开发和电子学的基本知识。对于那些没有经验的人，我们建议先阅读<a href="introduction.html#assumptions-and-prerequisites">假设和先决条件</a>以及<a href="introduction.html#other-resources">其他资源</a>部分以加快速度。</p>
+<h3 id="假设和先决条件"><a class="header" href="#假设和先决条件">假设和先决条件</a></h3>
+<ul>
+<li>您可以熟练使用 Rust 编程语言，并在桌面环境中编写和运行应用程序。</li>
+<li>你应该熟悉 2021 版的习语，因为本书针对 <a href="https://doc.rust-lang.org/edition-guide/rust-2021/index.html">Rust 2021</a>。</li>
+<li>您能够熟练地使用其他语言（例如 C 或 C++）开发嵌入式系统，并且熟悉以下概念：
+<ul>
+<li>交叉编译</li>
+<li>常见的数字接口，如 UART、SPI、I²C 等。</li>
+<li>内存映射外设</li>
+<li>中断</li>
+</ul>
+</li>
+</ul>
+<h3 id="其他资源"><a class="header" href="#其他资源">其他资源</a></h3>
+<p>如果您对上述任何内容都不熟悉或经验不足，或者您只是想了解有关本书中提到的特定主题的更多信息，您可能会发现这些资源很有帮助。</p>
+<div class="table-wrapper"><table><thead><tr><th>资源</th><th>描述</th></tr></thead><tbody>
+<tr><td><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></td><td>如果您不熟悉 Rust，我们建议您先阅读本书。</td></tr>
+<tr><td><a href="https://docs.rust-embedded.org/book/index.html">The Embedded Rust Book</a></td><td>在这里，您可以找到 Rust 的嵌入式工作组提供的其他一些资源。</td></tr>
+<tr><td><a href="https://docs.rust-embedded.org/embedonomicon/">The Embedonomicon</a></td><td>在 Rust 中进行嵌入式编程时的基本细节。</td></tr>
+<tr><td><a href="https://espressif-trainings.ferrous-systems.com/">Embedded Rust on Espressif</a></td><td>与 <a href="https://ferrous-systems.com/">Ferrous Systems</a> 合作创建的培训材料。</td></tr>
+</tbody></table>
+</div>
+<h3 id="翻译"><a class="header" href="#翻译">翻译</a></h3>
+<p>这本书目前只有英文版本。一旦本书的内容稳定下来，我们计划将其翻译成其他语言。随着翻译可用，本节将更新以包含它们。</p>
+<h2 id="如何使用本书"><a class="header" href="#如何使用本书">如何使用本书</a></h2>
+<p>本书通常假定您是从前到后阅读它；如果没有前几章的上下文，后面章节中涵盖的内容可能毫无意义。</p>
+<h2 id="为本书做贡献"><a class="header" href="#为本书做贡献">为本书做贡献</a></h2>
+<p>本书的工作在<a href="https://github.com/esp-rs/book">这个存储库</a>中进行协调。</p>
+<p>如果您在遵循本书中的说明时遇到问题，或者发现本书的某些部分不够清晰或难以理解，那么这是一个错误，应该在本书的<a href="https://github.com/esp-rs/book/issues/">问题跟踪器</a>中报告。</p>
+<p>非常欢迎修复拼写错误和添加新内容的拉取请求！</p>
+<h2 id="重复使用该材料"><a class="header" href="#重复使用该材料">重复使用该材料</a></h2>
+<p>本书根据以下许可分发：</p>
+<ul>
+<li>本书中包含的代码示例和独立的 Cargo 项目是根据 <a href="https://opensource.org/licenses/MIT">MIT 许可证</a> 和 <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 许可证 v2.0</a> 的条款获得许可的。</li>
+<li>本书中包含的文字、图片和图表均根据 Creative Commons <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode">CC-BY-SA v4.0</a> 许可条款获得许可。</li>
+</ul>
+<p>TL;DR：如果您想在您的作品中使用我们的文字或图片，您需要：</p>
+<ul>
+<li>给予适当的信任（即在幻灯片中提及这本书，并提供相关页面的链接）</li>
+<li>提供指向 <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode">CC-BY-SA v4.0</a> 许可证的链接</li>
+<li>说明您是否以任何方式更改了材料，并根据相同的许可对我们提供的材料进行任何更改</li>
+</ul>
+<p>请让我们知道如果你寻找这本书有用！</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="生态概述"><a class="header" href="#生态概述">生态概述</a></h1>
+<p>在乐鑫芯片上使用 Rust 有以下几种方法：</p>
+<ul>
+<li>使用 std 库，又名标准库。</li>
+<li>使用核心库 (no_std)，也就是裸机开发。</li>
+</ul>
+<p>这两种方法各有利弊，因此您应该根据项目的需要做出决定。本章包含对这两种方法的概述：</p>
+<ul>
+<li><a href="overview/./using-the-standard-library.html">使用标准库 (std)</a></li>
+<li><a href="overview/./bare-metal.html">在裸机上开发 (no_std)</a></li>
+</ul>
+<p>另请参阅 <a href="https://docs.rust-embedded.org/book/intro/no-std.html#a-no_std-rust-environment">The Embedded Rust Book</a> 中不同运行时的比较。</p>
+<p>GitHub 上的 <a href="https://github.com/esp-rs/">esp-rs 组织</a> 拥有许多与在乐鑫芯片上运行 Rust 相关的存储库。大多数所需的 crate 都在这里托管了它们的源代码。</p>
+<blockquote>
+<p>关于存储库命名约定的注释</p>
+<p>在 <a href="https://github.com/esp-rs/">esp-rs 组织</a>中，我们使用以下写法：</p>
+<ul>
+<li>以 <code>esp-idf-</code> 开头的存储库专注于 <code>std</code> 方法。例如：<code>esp-idf-hal</code></li>
+<li>以 <code>esp-</code> 开头的存储库专注于 <code>no_std</code> 方法。例如：<code>esp-hal</code></li>
+</ul>
+<p>很容易记住如下：</p>
+<ul>
+<li><code>no_std</code> 在裸机之上工作，所以 <code>esp-</code> 是乐鑫芯片</li>
+<li><code>std</code> 除了裸机，还需要<a href="https://github.com/espressif/esp-idf">附加层</a>, 则是 <code>esp-idf-</code></li>
+</ul>
+</blockquote>
+<h2 id="支持的乐鑫产品"><a class="header" href="#支持的乐鑫产品">支持的乐鑫产品</a></h2>
+<blockquote>
+<p><strong>笔记</strong>:</p>
+<ul>
+<li>✅ - 该功能已实施或支持</li>
+<li>⏳ - 该功能正在开发中</li>
+<li>❌ - 不支持该功能</li>
+</ul>
+</blockquote>
+<div class="table-wrapper"><table><thead><tr><th>芯片</th><th style="text-align: center"><code>std</code></th><th style="text-align: center"><code>no_std</code></th></tr></thead><tbody>
+<tr><td>ESP32</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
+<tr><td>ESP32-C2</td><td style="text-align: center">⏳</td><td style="text-align: center">✅</td></tr>
+<tr><td>ESP32-C3</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
+<tr><td>ESP32-C6</td><td style="text-align: center">⏳</td><td style="text-align: center">✅</td></tr>
+<tr><td>ESP32-S2</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
+<tr><td>ESP32-S3</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
+<tr><td>ESP32-H2</td><td style="text-align: center">⏳</td><td style="text-align: center">⏳</td></tr>
+<tr><td>ESP8266</td><td style="text-align: center">❌</td><td style="text-align: center">✅</td></tr>
+</tbody></table>
+</div>
+<p>在某些情况下支持的产品将在整本书中称为支持的 <em>乐鑫产品</em>。</p>
+<p>截至目前，esp-idf 框架支持的乐鑫产品是支持 Rust <code>std</code> 开发的产品。不同版本的esp-idf以及对乐鑫芯片的支持情况见<a href="https://github.com/espressif/esp-idf#esp-idf-release-and-soc-compatibility">此表</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="使用标准库-std"><a class="header" href="#使用标准库-std">使用标准库 (<code>std</code>)</a></h1>
+<p>乐鑫提供了一个基于 C 的开发框架，称为 <a href="https://github.com/espressif/esp-idf">esp-idf</a>，它已经或将支持从 ESP32 开始的所有乐鑫芯片；请注意，此框架_不支持_ ESP8266。另请参阅对 <a href="overview/index.html#support-for-espressif-products">乐鑫产品的支持</a>。</p>
+<p>反过来，<code>esp-idf</code> 提供了一个<a href="https://sourceware.org/newlib/">新的 lib 环境</a>，它具有足够的功能来在其上构建 Rust 标准库 (<code>std</code>)。这是在 ESP 设备上启用 <code>std</code> 支持所采用的方法。</p>
+<h2 id="当前支持"><a class="header" href="#当前支持">当前支持</a></h2>
+<p>截至目前，<a href="https://github.com/espressif/esp-idf#esp-idf-release-and-soc-compatibility/">esp-idf 框架</a>支持的乐鑫产品是支持 Rust <code>std</code> 开发的产品。</p>
+<p>使用 <code>std</code> 时，您可以访问 <a href="https://github.com/espressif/esp-idf">esp-idf</a> 中存在的许多功能，包括线程、互斥锁和其他同步原语、集合、随机数生成、套接字……</p>
+<h3 id="相关的-esp-rs-crates"><a class="header" href="#相关的-esp-rs-crates">相关的 <code>esp-rs</code> crates</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>仓库</th><th>描述</th></tr></thead><tbody>
+<tr><td><a href="https://github.com/esp-rs/embedded-svc">esp-rs/embedded-svc</a></td><td>嵌入式服务（<code>WiFi</code>、<code>网络</code>、<code>Httpd</code>、<code>日志记录</code>等）的抽象特征</td></tr>
+<tr><td><a href="https://github.com/esp-rs/esp-idf-svc">esp-rs/esp-idf-svc</a></td><td>使用 <code>esp-idf</code> 驱动程序的 <a href="https://github.com/esp-rs/embedded-svc">embedded-svc</a> 的实现。</td></tr>
+<tr><td><a href="https://github.com/esp-rs/esp-idf-hal">esp-rs/esp-idf-hal</a></td><td>使用 <code>esp-idf</code> 框架实现 <code>embedded-hal</code> 和其他特性。</td></tr>
+<tr><td><a href="https://github.com/esp-rs/esp-idf-sys">esp-rs/esp-idf-sys</a></td><td>Rust 绑定到 esp-idf 开发框架。提供对驱动程序、Wi-Fi 等的原始（<code>不安全</code>）访问。</td></tr>
+</tbody></table>
+</div>
+<p>上述 crates 具有相互依赖性，这种关系可以在下面看到。</p>
+<pre><code class="language-mermaid">graph TD;
+    esp-idf-hal --&gt; esp-idf-sys &amp; embedded-svc
+    esp-idf-svc --&gt; esp-idf-sys &amp; esp-idf-hal &amp; embedded-svc
+</code></pre>
+<h3 id="当您可能想要使用标准库-std"><a class="header" href="#当您可能想要使用标准库-std">当您可能想要使用标准库 (<code>std</code>)</a></h3>
+<ul>
+<li>丰富的功能：如果您的嵌入式系统需要大量功能，如支持网络协议、文件 I/O 或复杂的数据结构，您可能希望使用托管环境方法，因为标准库提供了广泛的功能，可以使用相对快速有效地构建复杂的应用程序</li>
+<li>可移植性：<code>std</code> crate 提供了一组标准化的 API，可以跨不同的平台和架构使用，从而更容易编写可移植和可重用的代码。</li>
+<li>快速开发：<code>std</code> crate 提供了一组丰富的功能，可用于快速高效地构建应用程序，而无需过多担心底层细节。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="裸机开发-no_std"><a class="header" href="#裸机开发-no_std">裸机开发 (<code>no_std</code>)</a></h1>
+<p>嵌入式 Rust 开发人员可能更熟悉使用 <code>no_std</code>；它不使用 <code>std</code>（<a href="https://doc.rust-lang.org/std/index.html">Rust 标准库</a> ）而是使用一个子集，即核心库。 <a href="https://docs.rust-embedded.org/">The Embedded Rust Book</a> 对此有很大的<a href="https://docs.rust-embedded.org/book/intro/no-std.html">介绍</a> 。</p>
+<p>重要的是要注意，由于 <code>no_std</code> 使用的 <code>Rust 核心库</code>是 <code>Rust 标准库</code>的一个子集，因此 <code>no_std</code> crate 可以在 <code>std</code> 环境中编译，但反之则不然。因此，在创建 crate 时，如果它需要<code>标准库</code>才能运行，则值得牢记。</p>
+<h2 id="当前支持-1"><a class="header" href="#当前支持-1">当前支持</a></h2>
+<p>下表涵盖了目前不同乐鑫产品对 <code>no_std</code> 的支持情况。</p>
+<div class="table-wrapper"><table><thead><tr><th></th><th style="text-align: center"><a href="https://github.com/esp-rs/esp-hal" title="Hardware abstraction layer">HAL</a></th><th style="text-align: center"><a href="https://github.com/esp-rs/esp-wifi" title="Wi-Fi, BLE and ESP-NOW support">Wi-Fi/BLE/ESP-NOW</a></th><th style="text-align: center"><a href="https://github.com/esp-rs/esp-backtrace" title="Exception and panic handlers">Backtrace</a></th><th style="text-align: center"><a href="https://github.com/esp-rs/esp-storage" title="Embedded-storage traits to access unencrypted flash memory">Storage</a></th></tr></thead><tbody>
+<tr><td>ESP32</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
+<tr><td>ESP32-C2</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
+<tr><td>ESP32-C3</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
+<tr><td>ESP32-C6</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
+<tr><td>ESP32-S2</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
+<tr><td>ESP32-S3</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td></tr>
+<tr><td>ESP32-H2</td><td style="text-align: center">⏳</td><td style="text-align: center">⏳</td><td style="text-align: center">✅</td><td style="text-align: center">⏳</td></tr>
+</tbody></table>
+</div>
+<blockquote>
+<p><strong>注意</strong>:</p>
+<ul>
+<li>✅ 在 Wi-Fi/BLE/ESP-NOW 中表示目标至少支持所列技术之一。有关详细信息，请参阅 esp-wifi 存储库的<a href="https://github.com/esp-rs/esp-wifi#current-support">当前支持</a>表。</li>
+<li><a href="https://github.com/esp-rs/esp8266-hal" title="ESP8266 Hardware abstraction layer">ESP8266 HAL</a> 处于维护模式，不会对该芯片进行进一步开发。</li>
+</ul>
+</blockquote>
+<h3 id="相关的-esp-rs-crates-1"><a class="header" href="#相关的-esp-rs-crates-1">相关的 <code>esp-rs</code> crates</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Repository</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://github.com/esp-rs/esp-hal" title="Hardware abstraction layer">esp-rs/esp-hal</a></td><td>硬件抽象层</td></tr>
+<tr><td><a href="https://github.com/esp-rs/esp-pacs" title="Peripheral access crates">esp-rs/esp-pacs</a></td><td>外设访问</td></tr>
+<tr><td><a href="https://github.com/esp-rs/esp-wifi" title="Wi-Fi, BLE and ESP-NOW support">esp-rs/esp-wifi</a></td><td>Wi-Fi, BLE 和 ESP-NOW 支持</td></tr>
+<tr><td><a href="https://github.com/esp-rs/esp-alloc" title="Simple heap allocator">esp-rs/esp-alloc</a></td><td>简单的堆分配器</td></tr>
+<tr><td><a href="https://github.com/esp-rs/esp-println" title="print!, println!">esp-rs/esp-println</a></td><td><code>print!</code>,  <code>println!</code></td></tr>
+<tr><td><a href="https://github.com/esp-rs/esp-backtrace" title="Exception and panic handlers">esp-rs/esp-backtrace</a></td><td>异常和 panic 处理</td></tr>
+<tr><td><a href="https://github.com/esp-rs/esp-storage" title="Embedded-storage traits to access unencrypted flash memory">esp-rs/esp-storage</a></td><td>访问未加密闪存的嵌入式存储特性</td></tr>
+</tbody></table>
+</div>
+<h3 id="当您可能想使用裸机时no_std"><a class="header" href="#当您可能想使用裸机时no_std">当您可能想使用裸机时（<code>no_std</code>）</a></h3>
+<ul>
+<li>小内存占用：如果您的嵌入式系统资源有限并且需要小内存占用，您可能希望使用裸机，因为 std 功能会增加大量的最终二进制文件大小和编译时间。</li>
+<li>直接硬件控制：如果您的嵌入式系统需要对硬件进行更直接的控制，例如低级设备驱动程序或访问专门的硬件功能，您可能希望使用裸机，因为 <code>std</code> 添加了抽象，这会使直接与硬件交互变得更加困难。</li>
+<li>实时约束或时间关键型应用程序：如果您的嵌入式系统需要实时性能或低延迟响应时间，因为 <code>std</code> 会引入不可预测的延迟和开销，从而影响实时性能。</li>
+<li>自定义要求：裸机允许对应用程序的行为进行更多自定义和细粒度控制，这在专用或非标准环境中很有用。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="设置开发环境"><a class="header" href="#设置开发环境">设置开发环境</a></h1>
+<p>目前，乐鑫 SoC 基于两种不同的架构：<code>RISC-V</code> 和 <code>Xtensa</code>。两种架构都支持 <code>std</code> 和 <code>no_std</code> 方法。</p>
+<p>要设置开发环境，请执行以下操作：</p>
+<ol>
+<li><a href="installation/index.html#install-rust">安装 Rust</a></li>
+<li>根据您的目标安装
+<ul>
+<li><a href="installation/index.html#risc-v-targets-only">仅限 <code>RISC-V</code> 目标</a></li>
+<li><a href="installation/index.html#risc-v-and-xtensa-targets"><code>RISC-V</code> 和 <code>Xtensa</code></a></li>
+</ul>
+</li>
+</ol>
+<p>正如下面安装过程中提到的，对于 <code>std</code> 开发不要忘记安装 <a href="installation/index.html#std-development-requirements"><code>std</code> 开发要求</a>.</p>
+<p>请注意，您可以在<a href="installation/index.html#using-containers">容器</a>中托管开发环境。</p>
+<h2 id="安装-rust"><a class="header" href="#安装-rust">安装 Rust</a></h2>
+<p>确保安装了 <a href="https://www.rust-lang.org/">Rust</a>。如果没有，请参阅 <a href="https://rustup.rs/">rustup</a> 网站上的说明。</p>
+<p>另请参阅。 <a href="https://rust-lang.github.io/rustup/installation/other.html">替代安装方法</a>.</p>
+<blockquote>
+<p><strong>注</strong>: 如果您在主机上运行 Windows，请确保您已经安装了下面列出的 ABI 之一。有关更多详细信息，请参阅 The rustup 一书中的 <a href="https://rust-lang.github.io/rustup/installation/windows.html">Windows</a> 一章。</p>
+<ul>
+<li><strong>MSVC</strong>: 推荐的 ABI，包含在 <code>rustup</code> 默认要求列表中。将其用于与 Visual Studio 生成的软件的互操作性。</li>
+<li><strong>GNU</strong>: GCC 工具链使用的 ABI。自行安装，以便与使用 MinGW/MSYS2 工具链构建的软件进行互操作。</li>
+</ul>
+</blockquote>
+<h2 id="仅限-risc-v-目标"><a class="header" href="#仅限-risc-v-目标">仅限 RISC-V 目标</a></h2>
+<p>要基于 <code>RISC-V</code> 架构为乐鑫芯片构建 Rust 应用程序，请执行以下操作：</p>
+<ol>
+<li>
+<p>使用 <code>rust-src</code> <a href="https://rust-lang.github.io/rustup/concepts/components.html">组件</a> 安装 <a href="https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust"><code>nightly 工具链</code></a>:</p>
+<pre><code class="language-bash">rustup toolchain install nightly --component rust-src
+</code></pre>
+</li>
+</ol>
+<ol start="2">
+<li>设定目标：
+<ul>
+<li>
+<p>对于 <code>no_std</code>（裸机）应用程序，运行：</p>
+<pre><code class="language-bash">rustup target add riscv32imc-unknown-none-elf # 适用于 ESP32-C2 和 ESP32-C3
+rustup target add riscv32imac-unknown-none-elf # 适用于 ESP32-C6 和 ESP32-H2
+</code></pre>
+<p>这个目标目前是 <a href="https://doc.rust-lang.org/nightly/rustc/platform-support.html#tier-2">Tier 2</a>，请注意 Rust 中 <code>riscv32</code> 目标的不同风格，涵盖不同的 <a href="https://en.wikichip.org/wiki/risc-v/standard_extensions"><code>RISC-V</code> 扩展</a>。</p>
+</li>
+<li>
+<p>对于 <code>std</code> 应用程序，使用 <code>riscv32imc-esp-espidf</code>。</p>
+<p>由于此目标当前是 <a href="https://doc.rust-lang.org/nightly/rustc/platform-support.html#tier-3">Tier 3</a>，因此它没有通过 <code>rustup</code> 分发的预构建对象，并且 <strong>不需要</strong> 作为 <code>no_std</code> 目标安装.</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="3">
+<li>要构建 <code>std</code> 项目，您还需要安装：
+<ul>
+<li><a href="https://llvm.org/"><code>LLVM</code></a> 编译器基础设施 </li>
+<li>其他 <a href="installation/index.html#std-development-requirements"><code>std</code> 开发要求</a></li>
+<li>在项目文件 <code>.cargo/config.toml</code>, 添加不稳定的 Cargo <a href="https://doc.rust-lang.org/cargo/reference/unstable.html">feature</a> <code>-Z build-std</code>. 本书后面讨论的<a href="installation/../writing-your-own-application/generate-project-from-template.html">模板项目</a>已经包含了它。</li>
+</ul>
+</li>
+</ol>
+<p>现在您应该能够在乐鑫的 <code>RISC-V</code> 芯片上构建和运行项目。</p>
+<h2 id="risc-v-和-xtensa-目标"><a class="header" href="#risc-v-和-xtensa-目标">RISC-V 和 Xtensa 目标</a></h2>
+<p><a href="https://github.com/esp-rs/espup"><code>espup</code></a> 是一个工具，可简化为 <code>Xtensa</code> 和 <code>RISC-V</code> 架构开发 Rust 应用程序所需组件的安装和维护。</p>
+<p>要安装 <code>espup</code>, 请运行:</p>
+<pre><code class="language-sh">cargo install espup
+</code></pre>
+<p>您也可以直接下载预编译的[发布二进制文件]或使用 <a href="https://github.com/cargo-bins/cargo-binstall">cargo-binstall</a>.</p>
+<p>安装 <code>espup</code> 后，执行以下操作：</p>
+<ol>
+<li>
+<p>安装所有必要的工具，通过运行以下命令为所有支持的乐鑫目标开发 Rust 应用程序：</p>
+<pre><code class="language-sh">espup install
+</code></pre>
+<p><code>espup</code> 将创建一个导出文件，其中包含构建项目所需的一些环境变量：</p>
+<ul>
+<li>Unix 系统 - <code>$HOME/export-esp.sh</code></li>
+<li>Windows - <code>%USERPROFILE%\export-esp.ps1</code></li>
+</ul>
+</li>
+<li>
+<p>在 Unix 系统上，确保在构建任何应用程序之前在每个终端中 source 此文件：<code>. $HOME/export-esp.sh</code></p>
+<blockquote>
+<p>在 Windows 系统上，无需 source 该文件。它只是为了显示修改后的环境变量而创建的。</p>
+</blockquote>
+</li>
+</ol>
+<p>ß
+运行 <code>espup install</code> 后：</p>
+<ul>
+<li><code>no_std</code> （裸机）应用程序应该开箱即用</li>
+<li><code>std</code> 应用程序需要额外的 <a href="installation/index.html#std-development-requirements"><code>std</code> 开发要求</a></li>
+</ul>
+<h3 id="什么是-espup-安装"><a class="header" href="#什么是-espup-安装">什么是 espup 安装</a></h3>
+<p>为了启用对乐鑫目标的支持, <code>espup</code> 安装了以下工具：</p>
+<ul>
+<li>支持乐鑫目标的乐鑫 Rust 分叉</li>
+<li>支持 <code>RISC-V</code> 目标的<code>nightly</code> 工具链</li>
+<li>支持 <code>Xtensa</code> 目标的 <code>LLVM</code> <a href="https://github.com/espressif/llvm-project">分叉</a></li>
+<li>链接最终二进制文件的 <a href="https://github.com/espressif/crosstool-NG/">GCC 工具链</a></li>
+</ul>
+<p>分叉编译器可以与标准 Rust 编译器共存，允许两者都安装在您的系统上。使用任何可用的<a href="https://rust-lang.github.io/rustup/overrides.html">覆盖方法</a>时，将调用这个分支编译器。</p>
+<blockquote>
+<p><strong>注</strong>: 我们正在努力将我们的分支合并到上游项目中。</p>
+<ol>
+<li><code>LLVM</code> 分支的变化。已经在进行中，请查看此<a href="https://github.com/espressif/llvm-project/issues/4">问题跟踪</a>中的状态。</li>
+<li>Rust 编译器分叉。如果 <code>LLVM</code> 的更改被接受，我们将继续进行 Rust 编译器的修改。</li>
+</ol>
+</blockquote>
+<h3 id="xtensa-目标的其他安装方法"><a class="header" href="#xtensa-目标的其他安装方法">Xtensa 目标的其他安装方法</a></h3>
+<ul>
+<li>使用 <a href="https://github.com/esp-rs/rust-build#download-installer-in-bash">esp-rs/rust-build</a> 安装脚本。这是过去推荐的方式，但现在安装脚本已冻结功能，所有新功能只会包含在 espup 中。有关说明，请参阅存储库自述文件。</li>
+<li>使用来自源代码的 <code>Xtensa</code> 支持构建 Rust 编译器。此过程的计算成本很高，可能需要一个或多个小时才能完成，具体取决于您的系统。除非有采用这种方法的主要原因，否则不推荐这样做。这是从源代码构建它的存储库： [esp-rs/rust 存储库]。</li>
+</ul>
+<h2 id="std-开发要求"><a class="header" href="#std-开发要求"><code>std</code> 开发要求</a></h2>
+<p>无论目标架构如何，请确保您安装了以下构建 <a href="installation/../overview/using-the-standard-library.html"><code>std</code></a> 应用程序所需的工具：</p>
+<ul>
+<li><a href="https://www.python.org/downloads/"><code>python</code></a>: ESP-IDF 要求</li>
+<li><a href="https://git-scm.com/downloads"><code>git</code></a>: ESP-IDF 要求</li>
+<li><a href="https://github.com/esp-rs/embuild/tree/master/ldproxy"><code>ldproxy</code></a>: 一种将链接器参数转发给实际链接器的工具，该链接器也作为参数提供给 <code>ldproxy</code>。安装方法：
+<pre><code class="language-sh">cargo install ldproxy
+</code></pre>
+</li>
+</ul>
+<p>std 运行时使用 <a href="https://github.com/espressif/esp-idf">ESP-IDF</a> (乐鑫 IoT 开发框架) 作为托管环境，但用户不需要安装它。ESP-IDF 由<a href="https://github.com/esp-rs/esp-idf-sys">esp-idf-sys</a> 自动下载和安装, 这是一个所有 std 项目在构建 std 应用程序时都需要使用的 crate。</p>
+<h2 id="使用容器"><a class="header" href="#使用容器">使用容器</a></h2>
+<p>您可以在容器中托管开发环境，而不是直接安装在您的本地系统上。乐鑫提供 <a href="https://hub.docker.com/r/espressif/idf-rust/tags">idf-rust</a> 镜像，支持 <code>RISC-V</code> 和 <code>Xtensa</code> 目标架构，支持 <code>std</code> 和 <code>no_std</code> 开发。</p>
+<p>您可以找到许多适用于 <code>linux/arm64</code> 和 <code>linux/amd64</code> 平台的标签。</p>
+<p>对于每个 Rust 版本，我们使用以下命名约定生成标签：</p>
+<ul>
+<li><code>&lt;chip&gt;_&lt;rust-toolchain-version&gt;</code>
+<ul>
+<li>例如，<code>esp32_1.64.0.0</code> 包含用于使用 <code>1.64.0.0</code> Xtensa Rust 工具链为 ESP32 开发 <code>std</code> 和 <code>no_std</code> 应用程序的生态系统。</li>
+</ul>
+</li>
+</ul>
+<p>有特殊情况</p>
+<ul>
+<li><code>&lt;chip&gt;</code> 可以是 <code>all</code>，表示与所有乐鑫目标兼容</li>
+<li><code>&lt;rust-toolchain-version&gt;</code> 可以是 <code>latest</code>，表示 <code>Xtensa Rust</code> 工具链的最新版本</li>
+</ul>
+<p>根据您的操作系统，您可以选择任何容器运行时，例如 <a href="https://www.docker.com/">Docker</a>、<a href="https://podman.io/">Podman</a> 或 <a href="https://github.com/lima-vm/lima">Lima</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="工具"><a class="header" href="#工具">工具</a></h1>
+<p>现在我们已经安装了所需的依赖项，我们将介绍一些工具，这些工具将使我们为 ESP 目标开发 Rust 应用程序的生活变得更加容易。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="文本编辑器和-ide"><a class="header" href="#文本编辑器和-ide">文本编辑器和 IDE</a></h1>
+<p>虽然这常常是一个有争议的话题，但是使用正确的开发环境可以显著提高您在某种编程语言下的生产力。以下是我们认为是最佳选项的经过精选的列表。</p>
+<h2 id="visual-studio-code"><a class="header" href="#visual-studio-code">Visual Studio Code</a></h2>
+<p>其中一个比较常见的开发环境是 Microsoft 的 Visual Studio Code 文本编辑器，以及 Rust Analyzer 扩展。</p>
+<p>Visual StudioCode 是一个开源的跨平台图形文本编辑器，具有丰富的扩展生态系统。 <a href="https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer">Rust Analyzer extension</a>提供了 Rust <a href="https://microsoft.github.io/language-server-protocol/">language server protocol</a> 的实现，另外还包括自动完成、转到定义等功能。</p>
+<p>Visual Studio Code 可以通过最流行的包管理器安装，安装程序可在官方网站上获得。 <a href="https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer">Rust Analyzer extension</a>可以通过内置的扩展管理器安装在 Visual Studio Code 中。</p>
+<p>除了 Rust Analyzer (RA)，还有其他可能非常有用的扩展：</p>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml">Even Better TOML</a> 用于编辑基于 TOML 的配置文件</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=serayuzgur.crates">crates</a> 帮助管理 Rust 依赖项</li>
+</ul>
+<h3 id="技巧和窍门"><a class="header" href="#技巧和窍门">技巧和窍门</a></h3>
+<p>如果您正在为不支持 <code>std</code> 的目标进行开发，Rust Analyzer 的行为可能会很奇怪，经常会报告各种错误。这可以通过在项目中创建 <code>.vscode/settings.json</code> 文件并使用以下内容填充来解决：</p>
+<pre><code class="language-json">{
+  &quot;rust-analyzer.checkOnSave.allTargets&quot;: false
+}
+</code></pre>
+<p>如果您正在使用自定义工具链，就像您使用 Xtensa 目标一样，您可以通过 <code>rust-toolchain.toml</code> 文件为 <code>cargo</code> 提供一些提示以改善用户体验：</p>
+<pre><code class="language-toml">[toolchain]
+channel = &quot;esp&quot;
+components = [&quot;rustfmt&quot;, &quot;rustc-dev&quot;]
+targets = [&quot;xtensa-esp32-none-elf&quot;]
+</code></pre>
+<h2 id="clion"><a class="header" href="#clion">CLion</a></h2>
+<p><a href="https://www.jetbrains.com/clion/">CLion</a> 是 <a href="https://www.jetbrains.com/">JetBrains</a> 的 C 和 C++ 跨平台 IDE。</p>
+<h2 id="intellij"><a class="header" href="#intellij">IntelliJ</a></h2>
+<h2 id="vim"><a class="header" href="#vim">vim</a></h2>
+<p><a href="https://www.vim.org/">vim</a> 是一个基于 vi 的高度可配置的文本编辑器，它还支持<a href="https://rust-analyzer.github.io/">Rust Analyzer</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="espflash"><a class="header" href="#espflash">espflash</a></h1>
+<p>用于 ESP 设备的串行烧写工具。支持烧写 <em>ESP32</em>、<em>ESP32-C2</em>、<em>ESP32-C3</em>、<em>ESP32-S2</em>、<em>ESP32-S3</em> 和 <em>ESP8266</em>。</p>
+<p><a href="https://github.com/esp-rs/espflash">esp-rs/espflash</a> 存储库包含两个 crate，<code>cargo-espflash</code> 和 <code>espflash</code>。您可以在下面各自的部分中找到有关它们的更多信息。</p>
+<h2 id="cargo-espflash"><a class="header" href="#cargo-espflash">cargo-espflash</a></h2>
+<p>为 <code>cargo</code> 提供一个子命令，用于处理交叉编译和烧写的操作。请注意，这需要使用 <code>cargo</code> 的实验性 <code>build-std </code>特性。有关这方面的更多信息，请参阅 <a href="https://doc.rust-lang.org/cargo/reference/unstable.html#build-std">cargo documentation</a>。</p>
+<p>安装方法:</p>
+<pre><code class="language-bash">cargo install cargo-espflash
+</code></pre>
+<p>这个命令必须在一个 Cargo 项目中运行，也就是包含一个 <code>Cargo.toml</code> 文件的目录中运行。例如，要在 <code>release</code> 模式下构建一个名为 <code>blinky</code> 的示例，将生成的二进制文件烧写到设备中，然后启动串行监视器，可以执行以下操作：</p>
+<pre><code class="language-bash">cargo espflash --example=blinky --release --monitor
+</code></pre>
+<p>如需更多信息，请参阅 <a href="https://github.com/esp-rs/espflash/blob/master/cargo-espflash/README.md">cargo-espflash README</a>.</p>
+<h2 id="espflash-1"><a class="header" href="#espflash-1">espflash</a></h2>
+<p>提供一个独立的命令行应用程序，用于将一个 ELF 文件烧写到设备中。</p>
+<p>安装方法:</p>
+<pre><code class="language-bash">cargo install espflash
+</code></pre>
+<p>假设您已经通过其他方式构建了一个 ELF 二进制文件，<code>espflash</code> 可以用于将其下载到您的设备中。例如，如果您使用 <code>idf.py</code> 从 <a href="https://github.com/espressif/esp-idf">esp-idf</a> 构建了 <code>getting-started/blinky</code> 示例，则可以运行以下命令：</p>
+<pre><code class="language-bash">espflash build/blinky
+</code></pre>
+<p>如需更多信息，请参阅 <a href="https://github.com/esp-rs/espflash/blob/master/espflash/README.md">espflash README</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="espmonitor"><a class="header" href="#espmonitor">espmonitor</a></h1>
+<p><a href="https://github.com/esp-rs/espmonitor">esp-rs/espmonitor</a> 存储库包含两个 crate，<code>cargo-espmonitor</code> 和 <code>espmonitor</code>。</p>
+<h2 id="cargo-espmonitor"><a class="header" href="#cargo-espmonitor">cargo-espmonitor</a></h2>
+<pre><code class="language-bash">cargo install cargo-espmonitor
+</code></pre>
+<h2 id="espmonitor-1"><a class="header" href="#espmonitor-1">espmonitor</a></h2>
+<pre><code class="language-bash">cargo install espmonitor
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="调试"><a class="header" href="#调试">调试</a></h1>
+<p>使用本章将介绍使用不同工具调试 Rust 应用程序。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="probe-rs"><a class="header" href="#probe-rs">probe-rs</a></h1>
+<p>probe-rs 项目是一组使用各种调试探针与嵌入式 MCU 交互的工具。它类似于 openOCD、PyOCD、Segger 工具等。支持 ARM 和 RISCV 架构以及一系列工具，包括但不限于：</p>
+<ul>
+<li>Debugger
+<ul>
+<li>GDB 支持</li>
+<li>用于交互式调试的 CLI</li>
+<li>VSCode 扩展</li>
+</ul>
+</li>
+<li>RTT (实时传输)
+<ul>
+<li>类似于 IDF 的 app_trace 组件</li>
+</ul>
+</li>
+<li>Flashing algorithms</li>
+</ul>
+<p>有关 probe-rs 以及如何设置项目的更多信息，请访问 <a href="https://probe.rs/">probe.rs</a> 网站。</p>
+<h2 id="usb-jtag-serial-peripheral-for-esp32-c3"><a class="header" href="#usb-jtag-serial-peripheral-for-esp32-c3"><code>USB-JTAG-SERIAL</code> peripheral for ESP32-C3</a></h2>
+<p>从 <code>probe-rs</code> v0.12 开始，可以使用内置的 <code>USB-JTAG-SERIAL</code> 外设对 ESP32-C3 进行烧写和调试，无需任何外部硬件调试器。有关配置接口的更多信息可以在<a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/api-guides/jtag-debugging/configure-builtin-jtag.html">官方文档</a>中找到。</p>
+<h2 id="支持乐鑫-espressif-芯片"><a class="header" href="#支持乐鑫-espressif-芯片">支持乐鑫 Espressif 芯片</a></h2>
+<p><code>probe-rs</code> 目前仅支持 <code>ARM</code> &amp; <code>RISC-V</code>，因此这限制了目前可以使用的 Espressif 芯片数量。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">Chip</th><th style="text-align: center">Flashing</th><th style="text-align: center">Debugging</th></tr></thead><tbody>
+<tr><td style="text-align: center">ESP32-C3</td><td style="text-align: center">✅</td><td style="text-align: center">⚠️</td></tr>
+</tbody></table>
+</div>
+<p><strong>请注意</strong>: <em>标有 ⚠️ 的项目目前正在进行中，可用，但可能会出现错误。</em></p>
+<h2 id="权限---linux"><a class="header" href="#权限---linux">权限 - Linux</a></h2>
+<p>在 Linux 上，您可能会在尝试与 Espressif 交互时遇到权限问题。安装以下 <code>udev</code> 规则并重新加载应该可以解决该问题。</p>
+<pre><code class="language-udev"># Espressif dev kit FTDI
+ATTRS{idVendor}==&quot;0403&quot;, ATTRS{idProduct}==&quot;6010&quot;, MODE=&quot;660&quot;, GROUP=&quot;plugdev&quot;, TAG+=&quot;uaccess&quot;
+
+# Espressif USB JTAG/serial debug unit
+ATTRS{idVendor}==&quot;303a&quot;, ATTRS{idProduct}==&quot;1001&quot;, MODE=&quot;660&quot;, GROUP=&quot;plugdev&quot;, TAG+=&quot;uaccess&quot;
+
+# Espressif USB Bridge
+ATTRS{idVendor}==&quot;303a&quot;, ATTRS{idProduct}==&quot;1002&quot;, MODE=&quot;660&quot;, GROUP=&quot;plugdev&quot;, TAG+=&quot;uaccess&quot;
+</code></pre>
+<!-- TODO: when probe-rs can actually debug at least a C3 with decent back traces etc, add a section here with an example config: see https://github.com/probe-rs/probe-rs/issues/877 -->
+<div style="break-before: page; page-break-before: always;"></div><h1 id="openocd"><a class="header" href="#openocd">OpenOCD</a></h1>
+<p>与 <a href="tooling/debugging/./probe-rs.html">probe-rs</a> 类似，OpenOCD 不支持 Xtensa 架构。然而，乐鑫在 <a href="https://github.com/espressif/openocd-esp32">espressif/openocd-esp32</a> 下维护了一个 OpenOCD 的分支，它支持 Espressif 的芯片。</p>
+<p>有关如何为您的平台安装 <code>openocd-esp32</code> 的说明，请参阅 <a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/api-guides/jtag-debugging/index.html#setup-of-openocd">Espressif 文档</a>。</p>
+<h2 id="espressif-芯片设置"><a class="header" href="#espressif-芯片设置">Espressif 芯片设置</a></h2>
+<!-- how to choose interface & chip -->
+<p>安装后，就像使用正确的脚本运行 <code>openocd</code> 一样简单。对于带有内置 USB JTAG 的芯片，通常有一个开箱即用的配置，例如在 ESP32-C3 上：</p>
+<pre><code class="language-ignore">openocd -f board/esp32c3-builtin.cfg
+</code></pre>
+<p>对于其他配置，可能需要分别指定芯片和接口，例如，带有 J-Link 的 ESP32：</p>
+<pre><code class="language-ignore">openocd -f interface/jlink.cfg -f target/esp32.cfg
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="在-visual-studio-code-上调试"><a class="header" href="#在-visual-studio-code-上调试">在 Visual Studio Code 上调试</a></h1>
+<p>您可以直接在 Visual Studio Code 中使用图形输出进行调试。</p>
+<h2 id="esp32"><a class="header" href="#esp32">ESP32</a></h2>
+<h3 id="硬件设置"><a class="header" href="#硬件设置">硬件设置</a></h3>
+<p>ESP32 没有内置 JTAG 接口，需要外接 JTAG 转接器到 ESP32 开发板，例如可以使用 <a href="https://docs.espressif.com/projects/espressif-esp-iot-solution/en/latest/hw-reference/ESP-Prog_guide.html">ESP-Prog</a>。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">ESP32 Pin</th><th style="text-align: center">JTAG Signal</th></tr></thead><tbody>
+<tr><td style="text-align: center">MTDO/GPIO15</td><td style="text-align: center">TDO</td></tr>
+<tr><td style="text-align: center">MTDI/GPIO12</td><td style="text-align: center">TDI</td></tr>
+<tr><td style="text-align: center">MTCK/GPIO13</td><td style="text-align: center">TCK</td></tr>
+<tr><td style="text-align: center">MTMS/GPIO14</td><td style="text-align: center">TMS</td></tr>
+<tr><td style="text-align: center">3V3</td><td style="text-align: center">VJTAG</td></tr>
+<tr><td style="text-align: center">GND</td><td style="text-align: center">GND</td></tr>
+</tbody></table>
+</div>
+<p><strong>注意</strong>：在 Windows 上 <code>USB 串行转换器 A 0403 6010 00</code> 驱动程序应该是 WinUSB。</p>
+<h3 id="vscode-设置"><a class="header" href="#vscode-设置">VSCode 设置</a></h3>
+<ol>
+<li>为 VScode 安装 <a href="https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug">Cortex-Debug</a> 扩展。</li>
+<li>在要调试的项目中创建 <code>.vscode/launch.json</code> 文件。可以使用<a href="https://github.com/esp-rs/esp32-hal/blob/master/.vscode/launch.json">这个</a>模板文件。</li>
+<li>修改 <strong>executable</strong>，<strong>svdFile</strong>，<strong>serverpath</strong> 路径和 <strong>toolchainPrefix</strong> 字段。</li>
+</ol>
+<pre><code class="language-jsonc">{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  &quot;version&quot;: &quot;0.2.0&quot;,
+  &quot;configurations&quot;: [
+    {
+      // more info at: https://github.com/Marus/cortex-debug/blob/master/package.json
+      &quot;name&quot;: &quot;Attach&quot;,
+      &quot;type&quot;: &quot;cortex-debug&quot;,
+      &quot;request&quot;: &quot;attach&quot;, // attach instead of launch, because otherwise flash write is attempted, but fails
+      &quot;cwd&quot;: &quot;${workspaceRoot}&quot;,
+      &quot;executable&quot;: &quot;target/xtensa-esp32-none-elf/debug/.....&quot;,
+      &quot;servertype&quot;: &quot;openocd&quot;,
+      &quot;interface&quot;: &quot;jtag&quot;,
+      &quot;svdFile&quot;: &quot;../../esp-pacs/esp32/svd/esp32.svd&quot;,
+      &quot;toolchainPrefix&quot;: &quot;xtensa-esp32-elf&quot;,
+      &quot;openOCDPreConfigLaunchCommands&quot;: [&quot;set ESP_RTOS none&quot;],
+      &quot;serverpath&quot;: &quot;C:/Espressif/tools/openocd-esp32/v0.11.0-esp32-20220411/openocd-esp32/bin/openocd.exe&quot;,
+      &quot;configFiles&quot;: [&quot;board/esp32-wrover-kit-3.3v.cfg&quot;],
+      &quot;overrideAttachCommands&quot;: [
+        &quot;set remote hardware-watchpoint-limit 2&quot;,
+        &quot;mon halt&quot;,
+        &quot;flushregs&quot;
+      ],
+      &quot;overrideRestartCommands&quot;: [&quot;mon reset halt&quot;, &quot;flushregs&quot;, &quot;c&quot;]
+    }
+  ]
+}
+</code></pre>
+<h2 id="esp32-c3"><a class="header" href="#esp32-c3">ESP32-C3</a></h2>
+<p><strong>revision &lt; 3</strong> <strong>没有</strong>内置 JTAG 接口。</p>
+<p><strong>revision 3</strong> <strong>具有</strong>内置 JTAG 接口，您无需连接外部设备即可进行调试。要获取芯片版本，请运行 <code>cargo espflash board-info</code> 命令。</p>
+<h3 id="硬件设置-1"><a class="header" href="#硬件设置-1">硬件设置</a></h3>
+<p>如果您的 ESP32-C3 的版本小于 3，请按照这些说明进行操作，如果您的版本为 3，则可以跳转到<a href="tooling/debugging/vscode-debugging.html#vscode-%E8%AE%BE%E7%BD%AE-1"><strong>VSCode 设置</strong></a>。</p>
+<p>ESP32-C3 <strong>版本 1</strong> 和<strong>版本 2</strong> 没有内置 JTAG 接口，因此您必须将外部 JTAG 适配器连接到 ESP32-C3 板，例如，可以使用 <a href="https://docs.espressif.com/projects/espressif-esp-iot-solution/en/latest/hw-reference/ESP-Prog_guide.html">ESP-Prog</a>。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">ESP32-C3 Pin</th><th style="text-align: center">JTAG Signal</th></tr></thead><tbody>
+<tr><td style="text-align: center">MTDO/GPIO7</td><td style="text-align: center">TDO</td></tr>
+<tr><td style="text-align: center">MTDI/GPIO5</td><td style="text-align: center">TDI</td></tr>
+<tr><td style="text-align: center">MTCK/GPIO6</td><td style="text-align: center">TCK</td></tr>
+<tr><td style="text-align: center">MTMS/GPIO4</td><td style="text-align: center">TMS</td></tr>
+<tr><td style="text-align: center">3V3</td><td style="text-align: center">VJTAG</td></tr>
+<tr><td style="text-align: center">GND</td><td style="text-align: center">GND</td></tr>
+</tbody></table>
+</div>
+<p><strong>注意</strong>：在 Windows 上 <code>USB 串行转换器 A 0403 6010 00</code> 驱动程序应该是 WinUSB。</p>
+<h3 id="vscode-设置-1"><a class="header" href="#vscode-设置-1">VSCode 设置</a></h3>
+<ol>
+<li>为 VScode 安装 <a href="https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug">Cortex-Debug</a> 扩展。</li>
+<li>在要调试的项目中创建 <code>.vscode/launch.json</code> 文件。可以使用<a href="https://github.com/esp-rs/esp32-hal/blob/master/.vscode/launch.json">这个</a>模板文件。</li>
+<li>修改 <strong>executable</strong>，<strong>svdFile</strong>，<strong>serverpath</strong> 路径和 <strong>toolchainPrefix</strong> 字段。</li>
+</ol>
+<pre><code class="language-jsonc">{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  &quot;version&quot;: &quot;0.2.0&quot;,
+  &quot;configurations&quot;: [
+    {
+      // more info at: https://github.com/Marus/cortex-debug/blob/master/package.json
+      &quot;name&quot;: &quot;Attach&quot;,
+      &quot;type&quot;: &quot;cortex-debug&quot;,
+      &quot;request&quot;: &quot;attach&quot;, // attach instead of launch, because otherwise flash write is attempted, but fails
+      &quot;cwd&quot;: &quot;${workspaceRoot}&quot;,
+      &quot;executable&quot;: &quot;target/riscv32imc-unknown-none-elf/debug/examples/usb_serial_jtag&quot;, //
+      &quot;servertype&quot;: &quot;openocd&quot;,
+      &quot;interface&quot;: &quot;jtag&quot;,
+      &quot;svdFile&quot;: &quot;../../esp-pacs/esp32c3/svd/esp32c3.svd&quot;,
+      &quot;toolchainPrefix&quot;: &quot;riscv32-esp-elf&quot;,
+      &quot;openOCDPreConfigLaunchCommands&quot;: [&quot;set ESP_RTOS none&quot;],
+      &quot;serverpath&quot;: &quot;C:/Espressif/tools/openocd-esp32/v0.11.0-esp32-20220411/openocd-esp32/bin/openocd.exe&quot;,
+      &quot;configFiles&quot;: [&quot;board/esp32c3-builtin.cfg&quot;],
+      &quot;overrideAttachCommands&quot;: [
+        &quot;set remote hardware-watchpoint-limit 2&quot;,
+        &quot;mon halt&quot;,
+        &quot;flushregs&quot;
+      ],
+      &quot;overrideRestartCommands&quot;: [&quot;mon reset halt&quot;, &quot;flushregs&quot;, &quot;c&quot;]
+    }
+  ]
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="模拟"><a class="header" href="#模拟">模拟</a></h1>
+<p>模拟项目非常方便。它允许用户使用 CI 测试项目，在没有硬件的情况下尝试项目，以及许多其他场景。</p>
+<p>目前，有几种模拟 Rust 项目在乐鑫芯片上的方法，它们都有一些限制，但是它们正在快速发展，并且每天变得更好。</p>
+<p>在本章中，我们将讨论可用的不同模拟方式。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="wokwi"><a class="header" href="#wokwi">Wokwi</a></h1>
+<p><a href="https://wokwi.com/">Wokwi</a> 是一个在线模拟器，支持在 ESP 芯片中模拟 Rust 项目（包括 <code>std</code> 和 <code>no_std</code>），请访问 <a href="https://wokwi.com/rust">wokwi.com/rust</a> 查看示例列表和开始新项目的方法。</p>
+<p>Wokwi 提供了 WiFi 模拟、虚拟逻辑分析仪和 <a href="https://docs.wokwi.com/gdb-debugging">GDB 调试</a>等众多功能，有关更多详细信息，请参阅 <a href="https://docs.wokwi.com/">Wokwi 文档</a>。对于 ESP 芯片，有一张<a href="https://docs.wokwi.com/guides/esp32#simulation-features">表格</a>列出了当前支持的模拟功能。</p>
+<h2 id="使用-wokwi-server"><a class="header" href="#使用-wokwi-server">使用 wokwi-server</a></h2>
+<p><a href="https://github.com/MabezDev/wokwi-server">wokwi-server</a> 是一个命令行工具，用于启动您项目的 Wokwi 模拟。也就是说，它允许您在您的计算机或容器中构建项目并模拟生成的二进制文件。</p>
+<p><a href="https://github.com/MabezDev/wokwi-server">wokwi-server</a> 还允许您在其他 Wokwi 项目上模拟您的生成二进制文件，其中包括比芯片本身更多的硬件部件。有关详细说明，请参阅 <a href="https://github.com/MabezDev/wokwi-server#simulating-your-binary-on-a-custom-wokwi-project">wokwi-server 自述文件的相应部分</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="qemu"><a class="header" href="#qemu">QEMU</a></h1>
+<p>乐鑫维护了一个 QEMU 分支，位于 <a href="https://github.com/espressif/qemu">espressif/QEMU</a>，其中包含必要的补丁，使其可以在乐鑫芯片上运行。请查看 <a href="https://github.com/espressif/qemu/wiki">QEMU wiki</a> 以获取有关如何构建 QEMU 并使用它来模拟项目的说明。</p>
+<p>一旦您构建了 QEMU，您应该会有 <code>qemu-system-xtensa</code> 可执行文件。</p>
+<h2 id="使用-qemu-运行我们的项目"><a class="header" href="#使用-qemu-运行我们的项目">使用 QEMU 运行我们的项目</a></h2>
+<blockquote>
+<p><em>注意</em>：目前只支持 ESP32，因此请确保您正在以 <code>xtensa-esp32-espidf</code> 为目标进行编译。</p>
+</blockquote>
+<p>要在 QEMU 中运行我们的项目，我们需要一个固件/映像，其中包含合并的引导加载程序和分区表。我们可以使用 <a href="https://github.com/esp-rs/espflash/tree/main/cargo-espflash"><code>cargo-espflash</code></a> 来生成它：</p>
+<pre><code class="language-bash">cargo espflash save-image --merge ESP32 &lt;OUTFILE&gt; --release
+</code></pre>
+<blockquote>
+<p>如果您喜欢使用 <a href="https://github.com/esp-rs/espflash/tree/main/espflash"><code>espflash</code></a>，则可以通过先构建项目，然后生成映像来实现相同的结果：</p>
+<pre><code class="language-bash">cargo build --release
+espflash save-image --merge ESP32 target/xtensa-esp32-espidf/release/&lt;NAME&gt; &lt;OUTFILE&gt;
+</code></pre>
+</blockquote>
+<p>现在，在 QEMU 中运行映像：</p>
+<pre><code class="language-sh">/path/to/qemu-system-xtensa -nographic -machine esp32 -drive file=&lt;OUTFILE&gt;,if=mtd,format=raw
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="编写你自己的应用程序"><a class="header" href="#编写你自己的应用程序">编写你自己的应用程序</a></h1>
+<p>当你安装了合适的Rust编译器和工具链之后，你就可以开始创建应用程序了。</p>
+<p>基本上有两种方法可以做到这一点：从模板生成或仅使用<code>cargo</code>从头开始。</p>
+<p>我们强烈建议从模板开始项目，因为它为你配置了一个项目，节省了从头开始使用<code>cargo</code>设置项目所需的所有时间。</p>
+<blockquote>
+<p>如果你正在寻找灵感，请查看我们 Awesome ESP Rust 仓库的 <a href="https://github.com/esp-rs/awesome-esp-rust#projects">Projects 部分</a></p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="从模板生成项目"><a class="header" href="#从模板生成项目">从模板生成项目</a></h1>
+<p>我们目前维护两个模板仓库：</p>
+<ul>
+<li><a href="https://github.com/esp-rs/esp-template">esp-template</a> - <code>no_std</code> 模板。</li>
+<li><a href="https://github.com/esp-rs/esp-idf-template">esp-idf-template</a> - <code>std</code> 模板。</li>
+</ul>
+<p>这两个模板都基于 <a href="https://github.com/cargo-generate/cargo-generate">cargo-generate</a>，这是一个允许你基于现有模板创建新项目的工具。在我们的情况下，可以使用 <a href="https://github.com/esp-rs/esp-idf-template">esp-idf-template</a> 或 <a href="https://github.com/esp-rs/esp-template">esp-template</a> 生成具有所有必需配置和依赖项的应用程序。</p>
+<p>可以通过运行以下命令安装 <code>cargo generate</code>：</p>
+<pre><code class="language-shell">cargo install cargo-generate
+</code></pre>
+<p>当调用 <code>cargo generate</code> 子命令时，你将被提示回答关于你的应用程序目标的一系列问题。完成此过程后，你将拥有一个可构建的项目，具有所有正确的配置。</p>
+<p>使用任何一个模板，生成的应用程序可以像正常情况下一样使用适当的工具链和目标构建，只需运行 <code>cargo build</code> 即可。</p>
+<p>使用 <code>cargo run</code> 将编译项目，将其烧录，并打开我们的芯片的串行监视器。</p>
+<h2 id="esp-idf-template"><a class="header" href="#esp-idf-template">esp-idf-template</a></h2>
+<p>当使用 Rust 标准库 (<code>std</code>) 时，可以使用 <a href="https://github.com/esp-rs/esp-idf-template">esp-idf-template</a> 模板，它看起来像这样：</p>
+<pre><code class="language-shell">$ cargo generate --git https://github.com/esp-rs/esp-idf-template cargo
+🤷   Project Name : esp-rust-app
+🔧   Destination: /home/alice/esp-rust-app ...
+🔧   Generating template ...
+✔ 🤷   MCU · esp32
+✔ 🤷   Configure project to use Dev Containers (VS Code, GitHub Codespaces and Gitpod)? (beware: Dev Containers not available for esp-idf v4.3.2) · false
+✔ 🤷   STD support · true
+✔ 🤷   ESP-IDF native build version (v4.3.2 = previous stable, v4.4 = stable, mainline = UNSTABLE) · v4.4
+[ 1/10]   Done: .cargo/config.toml
+[ 2/10]   Done: .cargo
+[ 3/10]   Done: .gitignore
+[ 4/10]   Done: .vscode
+[ 5/10]   Done: Cargo.toml
+[ 6/10]   Done: build.rs
+[ 7/10]   Done: rust-toolchain.toml
+[ 8/10]   Done: sdkconfig.defaults
+[ 9/10]   Done: src/main.rs
+[10/10]   Done: src
+🔧   Moving generated files into: `/home/alice/esp-rust-app`...
+💡   Initializing a fresh Git repository
+✨   Done! New project created /home/alice/esp-rust-app
+</code></pre>
+<p>有关模板项目的更多详细信息，请参见 <a href="writing-your-own-application/./std-applications/understanding-esp-idf-template.html">了解 esp-idf-template</a>。</p>
+<h2 id="esp-template"><a class="header" href="#esp-template">esp-template</a></h2>
+<p>对于裸机应用程序（<code>no_std</code>），您可以使用 <a href="https://github.com/esp-rs/esp-template">esp-template</a> 模板：</p>
+<pre><code class="language-shell">cargo generate --git https://github.com/esp-rs/esp-template
+🤷   Project Name : esp-rust-app
+🔧   Destination: /home/alice/esp-rust-app ...
+🔧   Generating template ...
+✔ 🤷   Which MCU to target? · esp32c3
+✔ 🤷   Configure project to use Dev Containers (VS Code, GitHub Codespaces and Gitpod)? · false
+✔ 🤷   Enable allocations via the esp-alloc crate? · false
+[ 1/11]   Done: .cargo/config.toml
+[ 2/11]   Done: .cargo
+[ 3/11]   Done: .gitignore
+[ 4/11]   Done: .vscode/settings.json
+[ 5/11]   Done: .vscode
+[ 6/11]   Done: Cargo.toml
+[ 7/11]   Done: LICENSE-APACHE
+[ 8/11]   Done: LICENSE-MIT
+[ 9/11]   Done: rust-toolchain.toml
+[10/11]   Done: src/main.rs
+[11/11]   Done: src
+🔧   Moving generated files into: `/home/alice/esp-rust-app`...
+✨   Done! New project created /home/alice/esp-rust-app
+</code></pre>
+<p>有关模板项目的更多详细信息，请参见 <a href="writing-your-own-application/./no-std-applications/understanding-esp-template.html">了解 esp-template</a>。</p>
+<h3 id="在模板中使用开发容器"><a class="header" href="#在模板中使用开发容器">在模板中使用开发容器</a></h3>
+<p>在两个模板仓库中，都有对于开发容器支持的提示。使用开发容器可以添加对以下工具的支持：</p>
+<ul>
+<li><a href="https://code.visualstudio.com/docs/remote/containers#_quick-start-open-an-existing-folder-in-a-container">VS Code 开发容器</a></li>
+<li><a href="https://docs.github.com/en/codespaces/developing-in-codespaces/creating-a-codespace">GitHub Codespaces</a></li>
+<li><a href="https://www.gitpod.io">Gitpod</a></li>
+</ul>
+<p>开发容器使用 <code>idf-rust</code> 容器镜像，该容器镜像在 Rust 安装章节的 <a href="writing-your-own-application/../installation/index.html#%E4%BD%BF%E7%94%A8%E5%AE%B9%E5%99%A8">使用容器部分</a> 中有介绍，并且为开发乐鑫芯片的 Rust 应用程序提供了一个无需安装的开发环境。开发容器还与 <a href="https://wokwi.com/">Wokwi 模拟器</a> 集成，可以在容器内模拟项目，并且使用 <a href="https://github.com/bjoernQ/esp-web-flash-server">Web Flash</a> 进行烧录。</p>
+<p>更多有关开发容器的详细信息，请参阅<a href="https://github.com/esp-rs/esp-template/tree/main/docs#dev-containers">模板自述文件中的开发容器部分</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="编写-no_std-应用程序"><a class="header" href="#编写-no_std-应用程序">编写 no_std 应用程序</a></h1>
+<p>本章的目标是提供一个入门指南，介绍如何使用 Rust 编程语言和 <a href="https://github.com/esp-rs/esp-hal">esp-hal</a> 在 Espressif SoCs 和模块上进行开发。</p>
+<blockquote>
+<p>请注意，在每个 SoC 的 <code>esp-hal</code> 下的 <code>examples</code> 文件夹中都有涵盖特定外设使用的示例。例如 <a href="https://github.com/esp-rs/esp-hal/tree/main/esp32c3-hal/examples"><code>esp32c3-hal/examples</code></a>。</p>
+</blockquote>
+<p>本章展示的示例通常适用于使用 <a href="https://github.com/esp-rs/esp-rust-board">ESP32-C3-DevKit-RUST-1</a> 开发板的 ESP32-C3。</p>
+<p>您可以使用任何其他 ESP32、ESP32-C3、ESP32-S2 或 ESP32-S3 开发板，但可能需要进行较小的代码更改和配置更改。</p>
+<p>此外，本书的本节仅涵盖本地工作。也就是说，我们将使用本地主机进行开发，而不是使用<a href="writing-your-own-application/no-std-applications/../generate-project-from-template.html#%E5%9C%A8%E6%A8%A1%E6%9D%BF%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%BC%80%E5%8F%91%E5%AE%B9%E5%99%A8">开发容器</a>，因此请确保您已正确<a href="writing-your-own-application/no-std-applications/../../installation/index.html">设置开发环境</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="了解-esp-template"><a class="header" href="#了解-esp-template">了解 esp-template</a></h1>
+<p>现在我们已经知道了如何<a href="writing-your-own-application/no-std-applications/../generate-project-from-template.html#esp-template">生成 no_std 项目</a>，让我们检查生成的项目包含的内容并尝试了解它的每个部分。</p>
+<h2 id="检查生成的项目"><a class="header" href="#检查生成的项目">检查生成的项目</a></h2>
+<p>使用以下选项从 <a href="https://github.com/esp-rs/esp-template">esp-template</a> 创建项目：</p>
+<ul>
+<li>MCU: <code>esp32c3</code></li>
+<li>Devcontainer 支持: <code>false</code></li>
+<li><code>esp-alloc</code> crate 支持: <code>false</code></li>
+</ul>
+<p>将生成如下文件结构：</p>
+<pre><code class="language-text">├── .cargo
+│   └── config.toml
+├── src
+│   └── main.rs
+├── .vscode
+│   └── settings.json
+├── .gitignore
+├── Cargo.toml
+├── LICENSE-APACHE
+├── LICENSE-MIT
+└── rust-toolchain.toml
+</code></pre>
+<p>在继续之前，让我们看看这些文件的作用。</p>
+<ul>
+<li><a href="https://git-scm.com/docs/gitignore">.gitignore</a>
+<ul>
+<li>告诉 <code>git</code> 忽略哪些文件和文件夹</li>
+</ul>
+</li>
+<li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html">Cargo.toml</a>
+<ul>
+<li>Cargo 元数据和项目依赖声明清单</li>
+</ul>
+</li>
+<li><code>LICENSE-APACHE</code>，<code>LICENSE-MIT</code>
+<ul>
+<li>这些是 Rust 生态系统中使用最广泛的许可证</li>
+<li>如果您想应用不同的许可证，可以删除这些文件并在 <code>Cargo.toml</code> 中更改许可证。</li>
+</ul>
+</li>
+<li><a href="https://rust-lang.github.io/rustup/overrides.html#the-toolchain-file">rust-toolchain.toml</a>
+<ul>
+<li>定义要使用的 Rust 工具链</li>
+<li>根据您的目标，这将使用 <code>nightly</code> 或 <code>esp</code></li>
+</ul>
+</li>
+<li><a href="https://doc.rust-lang.org/cargo/reference/config.html">.cargo/config.toml</a>
+<ul>
+<li>Cargo 配置</li>
+<li>这定义了几个选项以正确构建项目</li>
+<li>还包含 <code>runner = &quot;espflash --monitor&quot;</code> - 这意味着您可以使用 <code>cargo run</code> 来烧录和监视您的代码</li>
+</ul>
+</li>
+<li>.vscode/settings.json
+<ul>
+<li>Visual Studio Code 的设置 - 如果您不使用 VSCode，可以删除整个文件夹</li>
+</ul>
+</li>
+<li>src/main.rs
+<ul>
+<li>新创建项目的主源文件</li>
+<li>我们将在下一节中分析它的内容</li>
+</ul>
+</li>
+</ul>
+<h2 id="mainrs"><a class="header" href="#mainrs"><code>main.rs</code></a></h2>
+<pre><code class="language-rust ignore">#![no_std]
+#![no_main]
+
+use esp32c3_hal::{clock::ClockControl, pac::Peripherals, prelude::*, timer::TimerGroup, Rtc};
+use esp_backtrace as _;
+
+#[riscv_rt::entry]
+fn main() -&gt; ! {
+    let peripherals = Peripherals::take().unwrap();
+    let system = peripherals.SYSTEM.split();
+    let clocks = ClockControl::boot_defaults(system.clock_control).freeze();
+
+    // Disable the RTC and TIMG watchdog timers
+    let mut rtc = Rtc::new(peripherals.RTC_CNTL);
+    let timer_group0 = TimerGroup::new(peripherals.TIMG0, &amp;clocks);
+    let mut wdt0 = timer_group0.wdt;
+    let timer_group1 = TimerGroup::new(peripherals.TIMG1, &amp;clocks);
+    let mut wdt1 = timer_group1.wdt;
+
+    rtc.swd.disable();
+    rtc.rwdt.disable();
+    wdt0.disable();
+    wdt1.disable();
+
+    loop {}
+}</code></pre>
+<p>这是相当多的代码。让我们看看它有什么用。</p>
+<ul>
+<li><code>#![no_std]</code>
+<ul>
+<li>这告诉Rust编译器，这段代码不使用 <code>libstd</code></li>
+</ul>
+</li>
+<li><code>#![no_main]</code>
+<ul>
+<li><code>no_main</code> 属性表示该程序不使用标准的 main 接口，该接口专为接收参数的命令行应用程序设计。我们将使用<code>riscv-rt</code> 创建的 entry 属性来定义自定义入口点，而不是标准的 main。在此程序中，我们将入口点命名为 <code>main</code>，但是也可以使用任何其他名称。入口点函数必须是 <a href="https://doc.rust-lang.org/beta/rust-by-example/fn/diverging.html">diverging function</a>。即具有签名 <code>fn foo() -&gt; !</code>；此类型表示该函数永远不会返回，这意味着程序永远不会终止。</li>
+</ul>
+</li>
+<li><code>use esp32c3_hal:{...}</code>
+<ul>
+<li>我们需要引入一些要使用的类型</li>
+<li>这些来自 <code>esp-hal</code></li>
+</ul>
+</li>
+<li><code>use esp_backtrace as _;</code>
+<ul>
+<li>由于我们处于裸机环境中，如果在代码中发生 panic，我们需要运行一个 panic-handler</li>
+<li>有几种不同的 crate 可用（例如 <code>panic-halt</code>），但 <code>esp-backtrace</code> 提供了一个实现，该实现打印回溯的地址 - 与 <code>espflash</code>/<code>espmonitor</code> 一起，这些地址可以解码为源代码位置</li>
+</ul>
+</li>
+<li><code>let peripherals = Peripherals::take().unwrap();</code>
+<ul>
+<li>HAL 驱动程序通常接管通过 PAC 访问的外设的所有权</li>
+<li>在这里，我们从 PAC 中获取所有外设，以便稍后将它们传递给 HAL 驱动程序</li>
+</ul>
+</li>
+<li><code>let system = peripherals.SYSTEM.split();</code>
+<ul>
+<li>有时一个外设（这里是 System 外设）是粗粒度的，并且不完全适合 HAL 驱动程序 - 因此，在这里，我们将 System 外设分成更小的部分，这些部分将传递给驱动程序</li>
+</ul>
+</li>
+<li><code>let clocks = ClockControl::boot_defaults(system.clock_control).freeze();</code>
+<ul>
+<li>在这里，我们配置系统时钟 - 在本例中，我们使用默认值</li>
+<li>我们冻结时钟，这意味着我们以后无法更改它们</li>
+<li>一些驱动程序需要时钟的引用，以了解如何计算速率和持续时间</li>
+</ul>
+</li>
+<li>接下来的代码块实例化了一些外设（即 RTC 和两个定时器组）以禁用启动后已启用的看门狗
+<ul>
+<li>如果没有该代码，SoC 将在一段时间后重新启动</li>
+<li>还有另一种方法可以防止重新启动：<a href="https://docs.rs/esp32c3-hal/0.2.0/esp32c3_hal/prelude/trait._embedded_hal_watchdog_Watchdog.html#tymethod.feed">feeding</a> 看门狗</li>
+</ul>
+</li>
+<li><code>loop {}</code>
+<ul>
+<li>因为我们的函数永远不会返回值，所以我们在一个循环中“什么也不做”。</li>
+</ul>
+</li>
+</ul>
+<h2 id="运行代码"><a class="header" href="#运行代码">运行代码</a></h2>
+<p>构建和运行代码非常简单：</p>
+<pre><code class="language-shell">cargo run
+</code></pre>
+<p>这将根据配置构建代码并执行 <a href="https://github.com/esp-rs/espflash/tree/main/espflash"><code>espflash</code></a> 将代码刷入开发板。</p>
+<p>由于我们的 <a href="https://doc.rust-lang.org/cargo/reference/config.html#targettriplerunner"><code>runner</code> 配置</a> 还将 <code>--monitor</code> 参数传递给 <a href="https://github.com/esp-rs/espflash/tree/main/espflash"><code>espflash</code></a>，因此我们可以看到代码输出的内容。</p>
+<blockquote>
+<p>确保你已经安装了 <a href="https://github.com/esp-rs/espflash/tree/main/espflash"><code>espflash</code></a>，否则这一步会失败。安装 <a href="https://github.com/esp-rs/espflash/tree/main/espflash"><code>espflash</code></a>：
+<code>cargo install espflash</code></p>
+</blockquote>
+<p>你应该会看到类似以下的输出：</p>
+<pre><code class="language-text">Connecting...
+
+Chip type:         ESP32-C3 (revision 3)
+Crystal frequency: 40MHz
+Flash size:        4MB
+Features:          WiFi
+MAC address:       60:55:f9:c0:0e:ec
+App/part. size:    198752/4128768 bytes, 4.81%
+[00:00:00] ########################################      12/12      segment 0x0
+[00:00:00] ########################################       1/1       segment 0x8000
+[00:00:01] ########################################      57/57      segment 0x10000
+Flashing has completed!
+Commands:
+    CTRL+R    Reset chip
+    CTRL+C    Exit
+
+ESP-ROM:esp32c3-api1-20210207
+Build:Feb  7 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0xc (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4004c72e
+0x4004c72e - _stack_start
+    at ??:??
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fcd6100,len:0x172c
+load:0x403ce000,len:0x928
+0x403ce000 - _erwtext
+    at ??:??
+load:0x403d0000,len:0x2ce0
+0x403d0000 - _erwtext
+    at ??:??
+entry 0x403ce000
+0x403ce000 - _erwtext
+    at ??:??
+I (24) boot: ESP-IDF v4.4-dev-2825-gb63ec47238 2nd stage bootloader
+I (24) boot: compile time 12:10:40
+I (25) boot: chip revision: 3
+I (28) boot_comm: chip revision: 3, min. bootloader chip revision: 0
+I (35) boot.esp32c3: SPI Speed      : 80MHz
+I (39) boot.esp32c3: SPI Mode       : DIO
+I (44) boot.esp32c3: SPI Flash Size : 4MB
+I (49) boot: Enabling RNG early entropy source...
+I (54) boot: Partition Table:
+I (58) boot: ## Label            Usage          Type ST Offset   Length
+I (65) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (73) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (80) boot:  2 factory          factory app      00 00 00010000 003f0000
+I (88) boot: End of partition table
+I (92) boot_comm: chip revision: 3, min. application chip revision: 0
+I (99) esp_image: segment 0: paddr=00010020 vaddr=3c030020 size=04a6ch ( 19052) map
+I (110) esp_image: segment 1: paddr=00014a94 vaddr=40380000 size=00910h (  2320) load
+I (116) esp_image: segment 2: paddr=000153ac vaddr=00000000 size=0ac6ch ( 44140)
+I (131) esp_image: segment 3: paddr=00020020 vaddr=42000020 size=2081ch (133148) map
+I (152) boot: Loaded app from partition at offset 0x10000
+
+</code></pre>
+<p>这里你看到的是来自第一阶段和第二阶段引导程序的消息，然后...什么都没有了。</p>
+<p>这正是代码所做的。</p>
+<p>您可以使用 <code>CTRL+R</code> 重新启动，或使用 <code>CTRL+C</code> 退出。</p>
+<p>在下一章中，我们将添加一些更有趣的输出。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="hello-world"><a class="header" href="#hello-world">Hello World</a></h1>
+<p>在上一章中，您已经将第一段代码烧录到 SoC 上并运行成功 - 虽然这已经很令人兴奋，但我们可以做得更好。</p>
+<p>传统上，在微控制器上运行的第一件事情是闪烁灯（blinky）。</p>
+<p>但是，在这里我们将从 <em>Hello World</em> 开始。</p>
+<h2 id="添加依赖项"><a class="header" href="#添加依赖项">添加依赖项</a></h2>
+<p>你可以通过以下任意一种方法添加依赖项：</p>
+<ul>
+<li>编辑 <code>Cargo.toml</code> 文件。在 <code>[dependencies]</code> 部分添加以下行：</li>
+</ul>
+<pre><code class="language-toml">esp-println = { version = &quot;0.3.1&quot;, features = [&quot;esp32c3&quot;] }
+</code></pre>
+<ul>
+<li>使用 <a href="https://doc.rust-lang.org/cargo/commands/cargo-add.html"><code>cargo add</code></a> 命令：</li>
+</ul>
+<pre><code class="language-sh">cargo add esp-println --features &quot;esp32c3&quot;
+</code></pre>
+<p><a href="https://github.com/esp-rs/esp-println"><code>esp-println</code></a> 是一个附加的 crate，调用 ROM 函数打印文本，该文本由 <a href="https://github.com/esp-rs/espflash"><code>espflash</code></a>（或任何其他串行监视器）显示。</p>
+<p>我们需要传递 <code>esp32c3</code> 特性，因为该 crate 针对多个 SoC，需要知道它要在哪个 SoC 上运行。</p>
+<blockquote>
+<p>请注意，可能在您阅读本文时会有新版本，请检查 <a href="https://crates.io/crates/esp-println">crates.io</a>。</p>
+</blockquote>
+<h2 id="打印一些内容"><a class="header" href="#打印一些内容">打印一些内容</a></h2>
+<p>在 <code>main.rs</code> 的 <code>loop {}</code> 之前，加入以下这行代码：</p>
+<pre><code class="language-rust ignore">esp_println::println!(&quot;Hello World&quot;);</code></pre>
+<h2 id="查看结果"><a class="header" href="#查看结果">查看结果</a></h2>
+<p>再次运行</p>
+<pre><code class="language-shell">cargo run
+</code></pre>
+<p>你应该能看到打印出了 <em>Hello World</em> 这段文字！</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="panic"><a class="header" href="#panic">Panic!</a></h1>
+<p>当 Rust 中出现严重错误时，可能会发生<a href="https://doc.rust-lang.org/book/ch09-01-unrecoverable-errors-with-panic.html">panic</a>。</p>
+<p>让我们看看它对我们来说是什么样子。</p>
+<p>在 <code>main.rs</code> 中将此行放在某处，例如在我们的 <code>println</code> 之前：</p>
+<pre><code class="language-rust ignore">panic!(&quot;This is a panic&quot;);</code></pre>
+<p>再次运行代码。</p>
+<p>您应该会看到类似于这样的内容：</p>
+<pre><code class="language-text">
+
+!! A panic occured in 'src\main.rs', at line 25, column 5
+
+PanicInfo {
+    payload: Any { .. },
+    message: Some(
+        This is a panic,
+    ),
+    location: Location {
+        file: &quot;src\\main.rs&quot;,
+        line: 25,
+        col: 5,
+    },
+    can_unwind: true,
+}
+
+Backtrace:
+
+0x420019aa
+0x420019aa - main
+    at C:\tmp\getting-started\src\main.rs:25
+0x4200014c
+0x4200014c - _start_rust
+    at ...\.cargo\registry\src\github.com-1ecc6299db9ec823\riscv-rt-0.9.0\src\lib.rs:389
+</code></pre>
+<p>我们看到了 panic 发生的位置，甚至看到了回溯信息！</p>
+<p>虽然在这个例子中事情是显而易见的，但这在更复杂的代码中会派上用场。</p>
+<p>现在尝试使用 release 模式编译并运行代码：</p>
+<pre><code class="language-shell">cargo run --release
+</code></pre>
+<p>现在情况不太好看：</p>
+<pre><code class="language-text">
+!! A panic occured in 'src\main.rs', at line 25, column 5
+
+PanicInfo {
+    payload: Any { .. },
+    message: Some(
+        This is a panic,
+    ),
+    location: Location {
+        file: &quot;src\\main.rs&quot;,
+        line: 25,
+        col: 5,
+    },
+    can_unwind: true,
+}
+
+Backtrace:
+
+0x42000140
+0x42000140 - _start_rust
+    at ??:??
+</code></pre>
+<p>我们仍然可以看到 panic 发生的位置，但是回溯信息不太有用了。</p>
+<p>这是因为编译器省略了调试信息并优化了代码。</p>
+<p>但是你可能已经注意到了烧录二进制文件大小的差异。</p>
+<p>它从 199056 字节减少到了 86896 字节！</p>
+<p>请注意，对于我们所得到的东西来说，这仍然很大。有许多选项可以使二进制文件更小，这超出了本书的范围。</p>
+<!--(TODO：我们应该添加一个有关二进制大小的部分吗？) -->
+<p>在继续之前，请删除引起明确 panic 的行。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="blinky"><a class="header" href="#blinky">Blinky</a></h1>
+<p>让我们看看如何创建标志性的 <em>Blinky</em>。</p>
+<p>将 <code>main.rs</code> 中的代码改成这样</p>
+<pre><code class="language-rust ignore">#![no_std]
+#![no_main]
+
+use esp32c3_hal::{
+    clock::ClockControl, pac::Peripherals, prelude::*, timer::TimerGroup, Delay, Rtc, IO,
+};
+use esp_backtrace as _;
+
+#[riscv_rt::entry]
+fn main() -&gt; ! {
+    let peripherals = Peripherals::take().unwrap();
+    let system = peripherals.SYSTEM.split();
+    let clocks = ClockControl::boot_defaults(system.clock_control).freeze();
+
+    // Disable the RTC and TIMG watchdog timers
+    let mut rtc = Rtc::new(peripherals.RTC_CNTL);
+    let timer_group0 = TimerGroup::new(peripherals.TIMG0, &amp;clocks);
+    let mut wdt0 = timer_group0.wdt;
+    let timer_group1 = TimerGroup::new(peripherals.TIMG1, &amp;clocks);
+    let mut wdt1 = timer_group1.wdt;
+
+    rtc.swd.disable();
+    rtc.rwdt.disable();
+    wdt0.disable();
+    wdt1.disable();
+
+    esp_println::println!(&quot;Hello World&quot;);
+
+    // Set GPIO7 as an output, and set its state high initially.
+    let io = IO::new(peripherals.GPIO, peripherals.IO_MUX);
+    let mut led = io.pins.gpio7.into_push_pull_output();
+
+    led.set_high().unwrap();
+
+    // Initialize the Delay peripheral, and use it to toggle the LED state in a
+    // loop.
+    let mut delay = Delay::new(&amp;clocks);
+
+    loop {
+        led.toggle().unwrap();
+        delay.delay_ms(500u32);
+    }
+}</code></pre>
+<p>我们需要两个新类型：<a href="https://docs.rs/esp32c3-hal/0.2.0/esp32c3_hal/gpio/struct.IO.html"><code>IO</code></a> 和 <a href="https://docs.rs/esp32c3-hal/0.2.0/esp32c3_hal/struct.Delay.html"><code>Delay</code></a>。</p>
+<p>在 <a href="https://github.com/esp-rs/esp-rust-board">ESP32-C3-DevKit-RUST-1</a> 上，有一个常规的 <a href="https://github.com/esp-rs/esp-rust-board#pin-layout">LED 连接到 GPIO 7</a>。如果你使用其他开发板，请参考其数据手册。</p>
+<blockquote>
+<p>请注意，Espressif 大多数开发板现在使用一种工作方式不同的可寻址 LED，它超出了本书的范围。在这种情况下，您也可以将常规 LED 连接到某些空闲引脚（不要忘记加电阻）。</p>
+</blockquote>
+<p>在这里，我们可以将引脚设置为高电平、低电平或切换它。</p>
+<p>我们还看到 HAL 提供了一种延迟执行的方法。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="检测按钮按下"><a class="header" href="#检测按钮按下">检测按钮按下</a></h1>
+<p>大多数开发板都有一个按钮，在我们的例子中，我们将使用 <a href="https://github.com/esp-rs/esp-rust-board#ios"><code>BOOT</code> on <code>GPIO9</code></a> 的按钮。让我们看看如何检查按钮的状态。</p>
+<pre><code class="language-rust ignore">#![no_std]
+#![no_main]
+
+use esp32c3_hal::{
+    clock::ClockControl, pac::Peripherals, prelude::*, timer::TimerGroup, Rtc, IO,
+};
+use esp_backtrace as _;
+
+#[riscv_rt::entry]
+fn main() -&gt; ! {
+    let peripherals = Peripherals::take().unwrap();
+    let system = peripherals.SYSTEM.split();
+    let clocks = ClockControl::boot_defaults(system.clock_control).freeze();
+
+    // Disable the RTC and TIMG watchdog timers
+    let mut rtc = Rtc::new(peripherals.RTC_CNTL);
+    let timer_group0 = TimerGroup::new(peripherals.TIMG0, &amp;clocks);
+    let mut wdt0 = timer_group0.wdt;
+    let timer_group1 = TimerGroup::new(peripherals.TIMG1, &amp;clocks);
+    let mut wdt1 = timer_group1.wdt;
+
+    rtc.swd.disable();
+    rtc.rwdt.disable();
+    wdt0.disable();
+    wdt1.disable();
+
+    // Set GPIO7 as an output, GPIO9 as input
+    let io = IO::new(peripherals.GPIO, peripherals.IO_MUX);
+    let mut led = io.pins.gpio7.into_push_pull_output();
+    let button = io.pins.gpio9.into_pull_up_input();
+
+    loop {
+        if button.is_high().unwrap() {
+            led.set_high().unwrap();
+        } else {
+            led.set_low().unwrap();
+        }
+    }
+}</code></pre>
+<p>现在，如果未按下按钮，则 LED 会亮起。如果按下按钮，则 LED 熄灭。</p>
+<p>类似于将 <code>GPIO</code> 转换为 <code>output</code>，我们可以将其转换为 <code>input</code>。然后，我们可以使用 <code>is_high</code> 等函数获取 <code>input</code> 引脚的当前状态。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="使用中断检测按钮按下"><a class="header" href="#使用中断检测按钮按下">使用中断检测按钮按下</a></h1>
+<p><a href="https://docs.rust-embedded.org/book/start/interrupts.html">中断</a>提供了处理器处理异步事件和致命错误的机制。</p>
+<p>让我们添加 <a href="https://crates.io/crates/critical-section"><code>critical-section</code></a> crate <a href="writing-your-own-application/no-std-applications/./hello-world.html#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E9%A1%B9">(请参阅如何添加依赖项的说明)</a>，并将 <code>main.rs</code> 更改为以下内容：</p>
+<pre><code class="language-rust ignore">#![no_std]
+#![no_main]
+
+use core::cell::RefCell;
+use critical_section::Mutex;
+use esp32c3_hal::{
+    clock::ClockControl,
+    gpio::Gpio9,
+    gpio_types::{Event, Input, Pin, PullUp},
+    interrupt,
+    pac::{self, Peripherals},
+    prelude::*,
+    timer::TimerGroup,
+    Rtc, IO,
+};
+use esp_backtrace as _;
+
+static BUTTON: Mutex&lt;RefCell&lt;Option&lt;Gpio9&lt;Input&lt;PullUp&gt;&gt;&gt;&gt;&gt; = Mutex::new(RefCell::new(None));
+
+#[riscv_rt::entry]
+fn main() -&gt; ! {
+    let peripherals = Peripherals::take().unwrap();
+    let system = peripherals.SYSTEM.split();
+    let clocks = ClockControl::boot_defaults(system.clock_control).freeze();
+
+    // Disable the RTC and TIMG watchdog timers
+    let mut rtc = Rtc::new(peripherals.RTC_CNTL);
+    let timer_group0 = TimerGroup::new(peripherals.TIMG0, &amp;clocks);
+    let mut wdt0 = timer_group0.wdt;
+    let timer_group1 = TimerGroup::new(peripherals.TIMG1, &amp;clocks);
+    let mut wdt1 = timer_group1.wdt;
+
+    rtc.swd.disable();
+    rtc.rwdt.disable();
+    wdt0.disable();
+    wdt1.disable();
+
+    // Set GPIO9 as input
+    let io = IO::new(peripherals.GPIO, peripherals.IO_MUX);
+    let mut button = io.pins.gpio9.into_pull_up_input();
+    button.listen(Event::FallingEdge); // raise interrupt on falling edge
+
+    critical_section::with(|cs| BUTTON.borrow_ref_mut(cs).replace(button));
+
+    interrupt::enable(pac::Interrupt::GPIO, interrupt::Priority::Priority3).unwrap();
+
+    loop {}
+}
+
+#[interrupt]
+fn GPIO() {
+    critical_section::with(|cs| {
+        esp_println::println!(&quot;GPIO interrupt&quot;);
+        BUTTON
+            .borrow_ref_mut(cs)
+            .as_mut()
+            .unwrap()
+            .clear_interrupt();
+    });
+}</code></pre>
+<p>这里有很多新东西。</p>
+<p>首先是 <code>static BUTTON</code>。我们需要它，因为在中断处理程序中我们必须清除 button 上挂起的中断，并且我们需要以某种方式将 button 从 main 传递到中断处理程序。</p>
+<p>由于中断处理程序不能有参数，我们需要一个静态变量来将 button 放入中断处理程序。</p>
+<p>我们需要 <code>Mutex</code> 来安全地访问 button 。</p>
+<blockquote>
+<p>请注意，这不是您可能从 <code>libstd</code> 中了解到的 Mutex，而是来自 <a href="https://crates.io/crates/critical-section"><code>critical-section</code></a> 的 Mutex（这就是我们需要将其添加为依赖项的原因）。</p>
+</blockquote>
+<p>然后我们需要在输出引脚上调用 <code>listen</code> 以配置外设以引发中断。我们可以为不同的事件引发中断——这里我们想在 FallingEdge 引发中断。</p>
+<p>在下一行中，我们将 button 移入到 <code>static BUTTON</code> 中，以便中断处理程序获取它。</p>
+<p>我们需要做的最后一件事实际上是启用中断。</p>
+<p>这里的第一个参数是我们想要的中断类型。有几种<a href="https://docs.rs/esp32c3/0.5.1/esp32c3/enum.Interrupt.html">可能的中断</a>。</p>
+<p>第二个参数是中断的优先级。</p>
+<p>中断处理程序是通过 <code>#[interrupt]</code> 宏定义的。这里函数的名称必须与中断匹配。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="编写-std-应用程序"><a class="header" href="#编写-std-应用程序">编写 std 应用程序</a></h1>
+<p>如果您想学习如何开发 <code>std</code> 应用程序，可以与 <a href="https://ferrous-systems.com/">Ferrous Systems</a> 一起开发培训：</p>
+<ul>
+<li><a href="https://espressif-trainings.ferrous-systems.com/">培训书籍</a></li>
+<li><a href="https://github.com/ferrous-systems/espressif-trainings">培训代码库</a></li>
+</ul>
+<p>培训基于 <a href="https://github.com/esp-rs/esp-rust-board">ESP32-C3-DevKit-RUST-1</a>。您可以使用任何其他 ESP32、ESP32-C3、ESP32-S2 或 ESP32-S3 开发板，但可能需要更改代码和配置。</p>
+<p>培训分为两部分：</p>
+<ul>
+<li><a href="https://github.com/ferrous-systems/espressif-trainings/tree/main/intro">入门示例</a>:
+<ul>
+<li>基本硬件检查 (<a href="https://github.com/ferrous-systems/espressif-trainings/tree/main/intro/hardware-check">源码</a>)</li>
+<li>HTTP 客户端 (<a href="https://github.com/ferrous-systems/espressif-trainings/tree/main/intro/http-client">源码</a>)</li>
+<li>HTTP 服务器 (<a href="https://github.com/ferrous-systems/espressif-trainings/tree/main/intro/http-server">源码</a>)</li>
+<li>MQTT 客户端 (<a href="https://github.com/ferrous-systems/espressif-trainings/tree/main/intro/mqtt">源码</a>)</li>
+</ul>
+</li>
+<li><a href="https://github.com/ferrous-systems/espressif-trainings/tree/main/advanced">高级示例</a>:
+<ul>
+<li>底层 GPIO</li>
+<li>通用中断</li>
+<li>I2C 驱动程序 (<a href="https://github.com/ferrous-systems/espressif-trainings/tree/main/advanced/i2c-driver">源码</a>)</li>
+<li>I2C 传感器读取 (<a href="https://github.com/ferrous-systems/espressif-trainings/tree/main/advanced/i2c-sensor-reading">源码</a>)</li>
+<li>GPIO/Button 中断 (<a href="https://github.com/ferrous-systems/espressif-trainings/tree/main/advanced/button-interrupt">源码</a>)</li>
+<li>驱动 RGB LED</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>请注意，在 <code>esp-idf-hal</code> 的示例文件夹下有几个示例涵盖了特定外设的使用。例如 <a href="https://github.com/esp-rs/esp-idf-hal/tree/master/examples"><code>esp32-idf-hal/examples</code></a>。</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="了解-esp-idf-template"><a class="header" href="#了解-esp-idf-template">了解 esp-idf-template</a></h1>
+<p>现在我们已经知道了如何<a href="writing-your-own-application/std-applications/../generate-project-from-template.html#esp-idf-template">生成 std 项目</a>，让我们检查生成的项目包含的内容并尝试了解它的每个部分。</p>
+<h2 id="检查生成的项目-1"><a class="header" href="#检查生成的项目-1">检查生成的项目</a></h2>
+<p>使用以下选项从 <a href="https://github.com/esp-rs/esp-idf-template">esp-idf-template</a> 创建项目：</p>
+<ul>
+<li>MCU: <code>esp32c3</code></li>
+<li>ESP-IDF version: <code>v4.4</code></li>
+<li>STD support: <code>true</code></li>
+<li>Devcontainer support: <code>false</code></li>
+</ul>
+<p>将生成如下文件结构：</p>
+<pre><code class="language-text">├── build.rs
+├── .cargo
+│   └── config.toml
+├── Cargo.toml
+├── .gitignore
+├── rust-toolchain.toml
+├── sdkconfig.defaults
+└── src
+    └── main.rs
+</code></pre>
+<p>在继续之前，让我们看看这些文件的作用。</p>
+<ul>
+<li><a href="https://git-scm.com/docs/gitignore">.gitignore</a>
+<ul>
+<li>告诉 <code>git</code> 忽略哪些文件和文件夹</li>
+</ul>
+</li>
+<li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html">Cargo.toml</a>
+<ul>
+<li>Cargo 元数据和项目依赖声明清单</li>
+</ul>
+</li>
+<li><code>LICENSE-APACHE</code>，<code>LICENSE-MIT</code>
+<ul>
+<li>这些是 Rust 生态系统中使用最广泛的许可证</li>
+<li>如果您想应用不同的许可证，可以删除这些文件并在 <code>Cargo.toml</code> 中更改许可证。</li>
+</ul>
+</li>
+<li><a href="https://rust-lang.github.io/rustup/overrides.html#the-toolchain-file">rust-toolchain.toml</a>
+<ul>
+<li>定义要使用的 Rust 工具链</li>
+<li>根据您的目标，这将使用 <code>nightly</code> 或 <code>esp</code></li>
+</ul>
+</li>
+<li><a href="https://doc.rust-lang.org/cargo/reference/config.html">.cargo/config.toml</a>
+<ul>
+<li>Cargo 配置</li>
+<li>包含我们的目标</li>
+<li>包含 <code>runner = &quot;espflash --monitor&quot;</code> - 这意味着您可以使用 <code>cargo run</code> 来烧录和监视您的代码</li>
+<li>包含要使用的链接器，在我们的例子中是 <a href="https://github.com/esp-rs/embuild/tree/master/ldproxy"><code>ldproxy</code></a></li>
+<li>包含启用的 unstable <code>build-std</code> cargo feature。</li>
+<li>包含 <code>ESP-IDF-VERSION</code> 环境变量，该变量告诉 <a href="https://github.com/esp-rs/esp-idf-sys"><code>esp-idf-sys</code></a> 将使用哪个 ESP-IDF 版本。</li>
+</ul>
+</li>
+<li>src/main.rs
+<ul>
+<li>新创建项目的主源文件</li>
+<li>我们将在下一节中分析它的内容</li>
+</ul>
+</li>
+<li><a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html">build.rs</a>
+<ul>
+<li>传播 <code>ldproxy</code> 的链接器参数。</li>
+</ul>
+</li>
+<li><a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html#custom-sdkconfig-defaults">sdkconfig.defaults</a>
+<ul>
+<li>包含来自 ESP-IDF 默认值的覆盖值。</li>
+</ul>
+</li>
+</ul>
+<h2 id="mainrs-1"><a class="header" href="#mainrs-1"><code>main.rs</code></a></h2>
+<pre><code class="language-rust ignore">use esp_idf_sys as _; // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
+
+fn main() {
+    esp_idf_sys::link_patches();
+    println!(&quot;Hello, world!&quot;);
+}
+</code></pre>
+<p>第一行是一个导入，它定义了 esp-idf 入口点，当根 crate 是一个定义了 main 函数的二进制 crate 时。</p>
+<p>然后，我们有一个通常的 main 函数，上面有两行：</p>
+<ul>
+<li>调用 <code>esp_idf_sys::link_patches</code> 函数，确保在 Rust 中实现的 ESP-IDF 的一些补丁链接到最终的可执行文件。</li>
+<li>我们在控制台中打印著名的“Hello World!”。</li>
+</ul>
+<h2 id="运行代码-1"><a class="header" href="#运行代码-1">运行代码</a></h2>
+<p>构建和运行代码非常简单：</p>
+<pre><code class="language-shell">cargo run
+</code></pre>
+<p>这将根据配置构建代码并执行 <a href="https://github.com/esp-rs/espflash/tree/main/espflash"><code>espflash</code></a> 将代码刷入开发板。</p>
+<p>由于我们的 <a href="https://doc.rust-lang.org/cargo/reference/config.html#targettriplerunner"><code>runner</code> 配置</a> 还将 <code>--monitor</code> 参数传递给 <a href="https://github.com/esp-rs/espflash/tree/main/espflash"><code>espflash</code></a>，因此我们可以看到代码输出的内容。</p>
+<blockquote>
+<p>确保你已经安装了 <a href="https://github.com/esp-rs/espflash/tree/main/espflash"><code>espflash</code></a>，否则这一步会失败。安装 <a href="https://github.com/esp-rs/espflash/tree/main/espflash"><code>espflash</code></a>：
+<code>cargo install espflash</code></p>
+</blockquote>
+<p>你应该会看到类似以下的输出：</p>
+<pre><code class="language-text">Connecting...
+
+Chip type:         ESP32-C3 (revision 3)
+Crystal frequency: 40MHz
+Flash size:        4MB
+Features:          WiFi
+MAC address:       60:55:f9:c0:39:7c
+App/part. size:    409728/4128768 bytes, 9.92%
+[00:00:00] ########################################      12/12      segment 0x0
+[00:00:00] ########################################       1/1       segment 0x8000
+[00:00:04] ########################################     210/210     segment 0x10000
+Flashing has completed!
+Commands:
+    CTRL+R    Reset chip
+    CTRL+C    Exit
+
+ESP-ROM:esp32c3-api1-20210207
+Build:Feb  7 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0xc (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4004c97e
+0x4004c97e - chip726_phyrom_version_num
+    at ??:??
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fcd6100,len:0x172c
+load:0x403ce000,len:0x928
+0x403ce000 - _iram_text_end
+    at ??:??
+load:0x403d0000,len:0x2ce0
+0x403d0000 - _iram_text_end
+    at ??:??
+entry 0x403ce000
+0x403ce000 - _iram_text_end
+    at ??:??
+I (24) boot: ESP-IDF v4.4-dev-2825-gb63ec47238 2nd stage bootloader
+I (24) boot: compile time 12:10:40
+I (24) boot: chip revision: 3
+I (28) boot_comm: chip revision: 3, min. bootloader chip revision: 0
+I (35) boot.esp32c3: SPI Speed      : 80MHz
+I (39) boot.esp32c3: SPI Mode       : DIO
+I (44) boot.esp32c3: SPI Flash Size : 4MB
+I (49) boot: Enabling RNG early entropy source...
+I (54) boot: Partition Table:
+I (58) boot: ## Label            Usage          Type ST Offset   Length
+I (65) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (73) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (80) boot:  2 factory          factory app      00 00 00010000 003f0000
+I (88) boot: End of partition table
+I (92) boot_comm: chip revision: 3, min. application chip revision: 0
+I (99) esp_image: segment 0: paddr=00010020 vaddr=3c050020 size=17640h ( 95808) map
+I (122) esp_image: segment 1: paddr=00027668 vaddr=3fc89c00 size=0146ch (  5228) load
+I (123) esp_image: segment 2: paddr=00028adc vaddr=40380000 size=0753ch ( 30012) load
+I (133) esp_image: segment 3: paddr=00030020 vaddr=42000020 size=419d8h (268760) map
+I (176) esp_image: segment 4: paddr=00071a00 vaddr=4038753c size=02644h (  9796) load
+I (178) esp_image: segment 5: paddr=0007404c vaddr=50000010 size=00010h (    16) load
+I (185) boot: Loaded app from partition at offset 0x10000
+I (188) boot: Disabling RNG early entropy source...
+I (205) cpu_start: Pro cpu up.
+I (213) cpu_start: Pro cpu start user code
+I (213) cpu_start: cpu freq: 160000000
+I (213) cpu_start: Application information:
+I (216) cpu_start: Project name:     libespidf
+I (221) cpu_start: App version:      1
+I (226) cpu_start: Compile time:     Nov  3 2022 13:16:23
+I (232) cpu_start: ELF file SHA256:  0000000000000000...
+I (238) cpu_start: ESP-IDF:          755ce10-dirty
+I (243) heap_init: Initializing. RAM available for dynamic allocation:
+I (250) heap_init: At 3FC8BF90 len 00050780 (321 KiB): DRAM
+I (257) heap_init: At 3FCDC710 len 00002950 (10 KiB): STACK/DRAM
+I (263) heap_init: At 50000020 len 00001FE0 (7 KiB): RTCRAM
+I (270) spi_flash: detected chip: generic
+I (274) spi_flash: flash io: dio
+I (279) sleep: Configure to isolate all GPIO pins in sleep state
+I (285) sleep: Enable automatic switching of GPIO sleep configuration
+I (292) cpu_start: Starting scheduler.
+Hello, world!
+</code></pre>
+<p>如您所见，有来自第一阶段和第二阶段引导加载程序的消息，然后是我们的打印的“Hello, world!”。</p>
+<p>您可以使用 <code>CTRL+R</code> 重新启动，或使用 <code>CTRL+C</code> 退出。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="故障排查"><a class="header" href="#故障排查">故障排查</a></h1>
+<p>在这里，我们将列出在构建项目时可能出现的常见错误及其原因和解决方案。</p>
+<h2 id="libclang_path-环境变量未设置"><a class="header" href="#libclang_path-环境变量未设置">LIBCLANG_PATH 环境变量未设置</a></h2>
+<pre><code class="language-text">thread 'main' panicked at 'Unable to find libclang: &quot;couldn't find any valid shared libraries matching: ['libclang.so', 'libclang-*.so', 'libclang.so.*', 'libclang-*.so.*'], set the `LIBCLANG_PATH` environment variable to a path where one of these files can be found (invalid: [])&quot;', /home/esp/.cargo/registry/src/github.com-1ecc6299db9ec823/bindgen-0.60.1/src/lib.rs:2172:31
+</code></pre>
+<p>我们需要 <code>libclang</code> 来为 <a href="https://github.com/rust-lang/rust-bindgen"><code>bindgen</code></a> 生成 ESP-IDF C 标头的 Rust 绑定。确保环境变量 <code>LIBCLANG_PATH</code> 已设置并指向我们的 LLVM 自定义分支：</p>
+<ul>
+<li>Unix:
+<pre><code class="language-sh">export $HOME/.espressif/tools/xtensa-esp32-elf-clang/&lt;clang_version&gt;-&lt;host_triple&gt;/esp-clang/lib
+</code></pre>
+</li>
+<li>Windows:
+<pre><code class="language-powershell">$Env:LIBCLANG_PATH=&quot;%USERPROFILE%/.espressif/tools/xtensa-esp32-elf-clang/&lt;clang_version&gt;-&lt;host_triple&gt;/esp-clang/bin/libclang.dll&quot;
+$Env:PATH+=&quot;;%USERPROFILE%/.espressif/tools/xtensa-esp32-elf-clang/&lt;clang_version&gt;-&lt;host_triple&gt;/esp-clang/bin/&quot;
+</code></pre>
+</li>
+</ul>
+<h2 id="缺少-ldproxy"><a class="header" href="#缺少-ldproxy">缺少 <code>ldproxy</code></a></h2>
+<pre><code class="language-sh">error: linker `ldproxy` not found
+  |
+  = note: No such file or directory (os error 2)
+</code></pre>
+<p>如果您尝试构建 <code>std</code> 应用程序，则必须安装 [<code>ldproxy。</code>]</p>
+<pre><code class="language-sh">cargo install ldproxy
+</code></pre>
+<h2 id="使用错误的-rust-工具链"><a class="header" href="#使用错误的-rust-工具链">使用错误的 Rust 工具链</a></h2>
+<pre><code class="language-text">$ cargo build
+error: failed to run `rustc` to learn about target-specific information
+
+Caused by:
+  process didn't exit successfully: `rustc - --crate-name ___ --print=file-names --target xtensa-esp32-espidf --crate-type bin --crate-type rlib --crate-type dylib --crate-type cdylib --crate-type staticlib --crate-type proc-macro --print=sysroot --print=cfg` (exit status: 1)
+  --- stderr
+  error: Error loading target specification: Could not find specification for target &quot;xtensa-esp32-espidf&quot;. Run `rustc --print target-list` for a list of built-in targets
+</code></pre>
+<p>如果您遇到之前的错误或类似错误，您可能没有使用正确的 Rust 工具链，请记住，对于 Xtensa 目标，您需要使用 Espressif Rust 分支工具链，有几种方法可以做到：</p>
+<ul>
+<li>命令行上使用的<a href="https://rust-lang.github.io/rustup/overrides.html#toolchain-override-shorthand">工具链覆盖</a>速记：<code>cargo +esp</code>。</li>
+<li>将 <code>RUSTUP_TOOLCHAIN</code> 环境变量设置为 <code>esp</code>.</li>
+<li>设置<a href="https://rust-lang.github.io/rustup/overrides.html#directory-overrides">目录覆盖</a>：<code>rustup override set esp</code></li>
+<li>将 <a href="https://rust-lang.github.io/rustup/overrides.html#the-toolchain-file">rust-toolchain.toml</a> 文件添加到您的项目中:
+<pre><code class="language-toml">[toolchain]
+channel = &quot;esp&quot;
+</code></pre>
+</li>
+<li>将 <code>esp</code> 设置为<a href="https://rust-lang.github.io/rustup/overrides.html#default-toolchain">默认工具链</a>。</li>
+</ul>
+<p>有关工具链覆盖的更多信息，请参阅 <a href="https://rust-lang.github.io/rustup/overrides.html#overrides">The rustup book 的 Overrides 章节</a>。</p>
+<h2 id="windows"><a class="header" href="#windows">Windows</a></h2>
+<h3 id="长路径名"><a class="header" href="#长路径名">长路径名</a></h3>
+<p>使用 Windows 时，如果使用长路径名，您可能会在构建新项目时遇到问题。请按照以下步骤替换项目的路径：</p>
+<pre><code class="language-powershell">subst r: &lt;pathToYourProject&gt;
+cd r:\
+</code></pre>
+<h3 id="缺少-abi"><a class="header" href="#缺少-abi">缺少 ABI</a></h3>
+<pre><code class="language-powershell">  Compiling cc v1.0.69
+error: linker `link.exe` not found
+  |
+  = note: The system cannot find the file specified. (os error 2)
+
+note: the msvc targets depend on the msvc linker but `link.exe` was not found
+
+note: please ensure that VS 2013, VS 2015, VS 2017 or VS 2019 was installed with the Visual C++ option
+
+error: could not compile `compiler_builtins` due to previous error
+warning: build failed, waiting for other jobs to finish...
+error: build failed
+</code></pre>
+<p>此错误的原因是我们缺少 MSVC C++，因此我们不满足<a href="https://github.com/rust-lang/cc-rs#compile-time-requirements">编译时要求</a>，请安装 <a href="https://rust-lang.github.io/rustup/installation/windows.html">Visual Studio 2013（或更高版本）或 Visual C++ Build Tools 2019</a>。对于 Visual Studio，请务必检查“C++ 工具”和“Windows 10 SDK”选项。如果使用 GNU ABI，请安装 <a href="https://www.msys2.org/">MinGW/MSYS2 工具链</a>。</p>
+<h2 id="缺少-libtinfoso5"><a class="header" href="#缺少-libtinfoso5">缺少 <code>libtinfo.so.5</code></a></h2>
+<pre><code class="language-text">thread 'main' panicked at 'Unable to find libclang: &quot;the `libclang` shared library at /home/user/.espressif/tools/xtensa-esp32-elf-clang/esp-15.0.0-20221014-x86_64-unknown-linux-gnu/esp-clang/lib/libclang.so.15.0.0 could not be o
+pened: libtinfo.so.5: cannot open shared object file: No such file or directory&quot;', /home/user/.cargo/registry/src/github.com-1ecc6299db9ec823/bindgen-0.60.1/src/lib.rs:2172:31
+</code></pre>
+<p>一些 LLVM 15 版本，<code>esp-15.0.0-20220922</code> 和 <code>esp-15.0.0-20221014</code>，需要 <code>libtinfo.so.5</code>。此依赖项已在 <code>esp-15.0.0-20221201</code> LLVM 版本中删除。如果您使用的是任何需要它的版本，请确保安装了 <code>libtinf5</code>：</p>
+<ul>
+<li>Ubuntu/Debian: <code>sudo apt-get install libtinfo5</code></li>
+<li>Fedora: <code>sudo dnf install ncurses-compat-libs</code></li>
+<li>openSUSE: <code>sudo dnf install libncurses5</code></li>
+<li>Arch Linux: <code>sudo pacman -S ncurses5-compat-libs</code></li>
+</ul>
+<h2 id="faq"><a class="header" href="#faq">FAQ</a></h2>
+<h3 id="我更新了我的-sdkconfigdefaults-文件但它似乎没有任何效果"><a class="header" href="#我更新了我的-sdkconfigdefaults-文件但它似乎没有任何效果">我更新了我的 <code>sdkconfig.defaults</code> 文件，但它似乎没有任何效果</a></h3>
+<p>您必须清理您的项目并重新构建，以使 <code>sdkconfig.defaults</code> 中的更改生效：</p>
+<pre><code class="language-shell ignore">cargo clean
+cargo build
+</code></pre>
+<h3 id="此页面上提到的-crates-的文档已过时或丢失"><a class="header" href="#此页面上提到的-crates-的文档已过时或丢失">此页面上提到的 crates 的文档已过时或丢失</a></h3>
+<p>由于 <a href="https://docs.rs">docs.rs</a> 施加的<a href="https://docs.rs/about/builds#hitting-resource-limits">资源限制</a>，在构建文档时互联网访问被阻止，因此我们无法为 <code>esp-idf-sys</code> 或依赖它的任何 crate 构建文档。</p>
+<p>相反，我们正在构建文档并将其托管在 GitHub Pages 上：</p>
+<ul>
+<li><a href="https://esp-rs.github.io/esp-idf-hal/esp_idf_hal/"><code>esp-idf-hal</code> 文档</a></li>
+<li><a href="https://esp-rs.github.io/esp-idf-svc/esp_idf_svc/"><code>esp-idf-svc</code> 文档</a></li>
+<li><a href="https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/"><code>esp-idf-sys</code> 文档</a></li>
+</ul>
+<h3 id="error-a-stack-overflow-in-task-main-has-been-detected"><a class="header" href="#error-a-stack-overflow-in-task-main-has-been-detected">***ERROR*** A stack overflow in task main has been detected.</a></h3>
+<p>如果第二阶段引导加载程序报告此错误，您可能需要增加主任务的堆栈大小。这可以通过将以下内容添加到 <code>sdkconfig.defaults</code> 文件来完成：</p>
+<pre><code class="language-ignore">CONFIG_ESP_MAIN_TASK_STACK_SIZE=7000
+</code></pre>
+<p>在此示例中，我们为主任务的堆栈分配 7kB。</p>
+<h3 id="我怎样才能完全禁用看门狗定时器"><a class="header" href="#我怎样才能完全禁用看门狗定时器">我怎样才能完全禁用看门狗定时器？</a></h3>
+<p>添加到您的 <code>sdkconfig.defaults</code> 文件：</p>
+<pre><code class="language-ignore">CONFIG_INT_WDT=n
+CONFIG_ESP_TASK_WDT=n
+</code></pre>
+<p>回想一下，在修改这些配置文件时，您必须在重建之前清理您的项目</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="assets/mermaid.min.js"></script>
+        <script src="assets/mermaid-init.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

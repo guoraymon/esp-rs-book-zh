@@ -1,0 +1,274 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>从模板生成项目 - The Rust on ESP Book 中文版</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="使用 Rust 编程语言开发 Espressif SoC 和模块的综合指南">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="../overview/index.html"><strong aria-hidden="true">2.</strong> 生态概述</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../overview/using-the-standard-library.html"><strong aria-hidden="true">2.1.</strong> 使用标准库 (std)</a></li><li class="chapter-item expanded "><a href="../overview/bare-metal.html"><strong aria-hidden="true">2.2.</strong> 裸机开发 (no_std)</a></li></ol></li><li class="chapter-item expanded "><a href="../installation/index.html"><strong aria-hidden="true">3.</strong> 设置开发环境</a></li><li class="chapter-item expanded "><a href="../tooling/index.html"><strong aria-hidden="true">4.</strong> 工具</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../tooling/text-editors-and-ides.html"><strong aria-hidden="true">4.1.</strong> 文本编辑器和 IDE</a></li><li class="chapter-item expanded "><a href="../tooling/espflash.html"><strong aria-hidden="true">4.2.</strong> espflash</a></li><li class="chapter-item expanded "><a href="../tooling/espmonitor.html"><strong aria-hidden="true">4.3.</strong> espmonitor</a></li><li class="chapter-item expanded "><a href="../tooling/debugging/index.html"><strong aria-hidden="true">4.4.</strong> 调试</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../tooling/debugging/probe-rs.html"><strong aria-hidden="true">4.4.1.</strong> probe-rs</a></li><li class="chapter-item expanded "><a href="../tooling/debugging/openocd.html"><strong aria-hidden="true">4.4.2.</strong> OpenOCD</a></li><li class="chapter-item expanded "><a href="../tooling/debugging/vscode-debugging.html"><strong aria-hidden="true">4.4.3.</strong> 在 Visual Studio Code 上调试</a></li></ol></li><li class="chapter-item expanded "><a href="../tooling/simulating/index.html"><strong aria-hidden="true">4.5.</strong> 模拟</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../tooling/simulating/wokwi.html"><strong aria-hidden="true">4.5.1.</strong> Wokwi</a></li><li class="chapter-item expanded "><a href="../tooling/simulating/qemu.html"><strong aria-hidden="true">4.5.2.</strong> QEMU</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../writing-your-own-application/index.html"><strong aria-hidden="true">5.</strong> 编写您自己的应用程序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../writing-your-own-application/generate-project-from-template.html" class="active"><strong aria-hidden="true">5.1.</strong> 从模板生成项目</a></li><li class="chapter-item expanded "><a href="../writing-your-own-application/no-std-applications/index.html"><strong aria-hidden="true">5.2.</strong> 编写 no_std 应用程序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../writing-your-own-application/no-std-applications/understanding-esp-template.html"><strong aria-hidden="true">5.2.1.</strong> 了解 esp-template</a></li><li class="chapter-item expanded "><a href="../writing-your-own-application/no-std-applications/hello-world.html"><strong aria-hidden="true">5.2.2.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="../writing-your-own-application/no-std-applications/panic.html"><strong aria-hidden="true">5.2.3.</strong> Panic!</a></li><li class="chapter-item expanded "><a href="../writing-your-own-application/no-std-applications/blinky.html"><strong aria-hidden="true">5.2.4.</strong> Blinky</a></li><li class="chapter-item expanded "><a href="../writing-your-own-application/no-std-applications/button.html"><strong aria-hidden="true">5.2.5.</strong> 检测按钮按下</a></li><li class="chapter-item expanded "><a href="../writing-your-own-application/no-std-applications/interrupt.html"><strong aria-hidden="true">5.2.6.</strong> 使用中断检测按钮按下</a></li></ol></li><li class="chapter-item expanded "><a href="../writing-your-own-application/std-applications/index.html"><strong aria-hidden="true">5.3.</strong> 编写 std 应用程序</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../writing-your-own-application/std-applications/understanding-esp-idf-template.html"><strong aria-hidden="true">5.3.1.</strong> 了解 esp-idf-template</a></li><li class="spacer"></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../misc/troubleshooting.html">附录 A: 故障排查</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust on ESP Book 中文版</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/guoraymon/esp-rs-book-zh" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="从模板生成项目"><a class="header" href="#从模板生成项目">从模板生成项目</a></h1>
+<p>我们目前维护两个模板仓库：</p>
+<ul>
+<li><a href="https://github.com/esp-rs/esp-template">esp-template</a> - <code>no_std</code> 模板。</li>
+<li><a href="https://github.com/esp-rs/esp-idf-template">esp-idf-template</a> - <code>std</code> 模板。</li>
+</ul>
+<p>这两个模板都基于 <a href="https://github.com/cargo-generate/cargo-generate">cargo-generate</a>，这是一个允许你基于现有模板创建新项目的工具。在我们的情况下，可以使用 <a href="https://github.com/esp-rs/esp-idf-template">esp-idf-template</a> 或 <a href="https://github.com/esp-rs/esp-template">esp-template</a> 生成具有所有必需配置和依赖项的应用程序。</p>
+<p>可以通过运行以下命令安装 <code>cargo generate</code>：</p>
+<pre><code class="language-shell">cargo install cargo-generate
+</code></pre>
+<p>当调用 <code>cargo generate</code> 子命令时，你将被提示回答关于你的应用程序目标的一系列问题。完成此过程后，你将拥有一个可构建的项目，具有所有正确的配置。</p>
+<p>使用任何一个模板，生成的应用程序可以像正常情况下一样使用适当的工具链和目标构建，只需运行 <code>cargo build</code> 即可。</p>
+<p>使用 <code>cargo run</code> 将编译项目，将其烧录，并打开我们的芯片的串行监视器。</p>
+<h2 id="esp-idf-template"><a class="header" href="#esp-idf-template">esp-idf-template</a></h2>
+<p>当使用 Rust 标准库 (<code>std</code>) 时，可以使用 <a href="https://github.com/esp-rs/esp-idf-template">esp-idf-template</a> 模板，它看起来像这样：</p>
+<pre><code class="language-shell">$ cargo generate --git https://github.com/esp-rs/esp-idf-template cargo
+🤷   Project Name : esp-rust-app
+🔧   Destination: /home/alice/esp-rust-app ...
+🔧   Generating template ...
+✔ 🤷   MCU · esp32
+✔ 🤷   Configure project to use Dev Containers (VS Code, GitHub Codespaces and Gitpod)? (beware: Dev Containers not available for esp-idf v4.3.2) · false
+✔ 🤷   STD support · true
+✔ 🤷   ESP-IDF native build version (v4.3.2 = previous stable, v4.4 = stable, mainline = UNSTABLE) · v4.4
+[ 1/10]   Done: .cargo/config.toml
+[ 2/10]   Done: .cargo
+[ 3/10]   Done: .gitignore
+[ 4/10]   Done: .vscode
+[ 5/10]   Done: Cargo.toml
+[ 6/10]   Done: build.rs
+[ 7/10]   Done: rust-toolchain.toml
+[ 8/10]   Done: sdkconfig.defaults
+[ 9/10]   Done: src/main.rs
+[10/10]   Done: src
+🔧   Moving generated files into: `/home/alice/esp-rust-app`...
+💡   Initializing a fresh Git repository
+✨   Done! New project created /home/alice/esp-rust-app
+</code></pre>
+<p>有关模板项目的更多详细信息，请参见 <a href="./std-applications/understanding-esp-idf-template.html">了解 esp-idf-template</a>。</p>
+<h2 id="esp-template"><a class="header" href="#esp-template">esp-template</a></h2>
+<p>对于裸机应用程序（<code>no_std</code>），您可以使用 <a href="https://github.com/esp-rs/esp-template">esp-template</a> 模板：</p>
+<pre><code class="language-shell">cargo generate --git https://github.com/esp-rs/esp-template
+🤷   Project Name : esp-rust-app
+🔧   Destination: /home/alice/esp-rust-app ...
+🔧   Generating template ...
+✔ 🤷   Which MCU to target? · esp32c3
+✔ 🤷   Configure project to use Dev Containers (VS Code, GitHub Codespaces and Gitpod)? · false
+✔ 🤷   Enable allocations via the esp-alloc crate? · false
+[ 1/11]   Done: .cargo/config.toml
+[ 2/11]   Done: .cargo
+[ 3/11]   Done: .gitignore
+[ 4/11]   Done: .vscode/settings.json
+[ 5/11]   Done: .vscode
+[ 6/11]   Done: Cargo.toml
+[ 7/11]   Done: LICENSE-APACHE
+[ 8/11]   Done: LICENSE-MIT
+[ 9/11]   Done: rust-toolchain.toml
+[10/11]   Done: src/main.rs
+[11/11]   Done: src
+🔧   Moving generated files into: `/home/alice/esp-rust-app`...
+✨   Done! New project created /home/alice/esp-rust-app
+</code></pre>
+<p>有关模板项目的更多详细信息，请参见 <a href="./no-std-applications/understanding-esp-template.html">了解 esp-template</a>。</p>
+<h3 id="在模板中使用开发容器"><a class="header" href="#在模板中使用开发容器">在模板中使用开发容器</a></h3>
+<p>在两个模板仓库中，都有对于开发容器支持的提示。使用开发容器可以添加对以下工具的支持：</p>
+<ul>
+<li><a href="https://code.visualstudio.com/docs/remote/containers#_quick-start-open-an-existing-folder-in-a-container">VS Code 开发容器</a></li>
+<li><a href="https://docs.github.com/en/codespaces/developing-in-codespaces/creating-a-codespace">GitHub Codespaces</a></li>
+<li><a href="https://www.gitpod.io">Gitpod</a></li>
+</ul>
+<p>开发容器使用 <code>idf-rust</code> 容器镜像，该容器镜像在 Rust 安装章节的 <a href="../installation/index.html#%E4%BD%BF%E7%94%A8%E5%AE%B9%E5%99%A8">使用容器部分</a> 中有介绍，并且为开发乐鑫芯片的 Rust 应用程序提供了一个无需安装的开发环境。开发容器还与 <a href="https://wokwi.com/">Wokwi 模拟器</a> 集成，可以在容器内模拟项目，并且使用 <a href="https://github.com/bjoernQ/esp-web-flash-server">Web Flash</a> 进行烧录。</p>
+<p>更多有关开发容器的详细信息，请参阅<a href="https://github.com/esp-rs/esp-template/tree/main/docs#dev-containers">模板自述文件中的开发容器部分</a>。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../writing-your-own-application/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../writing-your-own-application/no-std-applications/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../writing-your-own-application/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../writing-your-own-application/no-std-applications/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../assets/mermaid.min.js"></script>
+        <script src="../assets/mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

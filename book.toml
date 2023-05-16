@@ -1,6 +1,6 @@
 [book]
 title        = "The Rust on ESP Book 中文版"
-description  = "关于将 Rust 编程语言与 Espressif SoC 和模块结合使用的综合指南"
+description  = "使用 Rust 编程语言开发 Espressif SoC 和模块的综合指南"
 multilingual = false
 language     = "zh"
 

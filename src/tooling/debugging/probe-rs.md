@@ -1,36 +1,36 @@
 # probe-rs
 
-The probe-rs project is a set of tools to interact with embedded MCU's using various debug probes. It is similar to openOCD, PyOCD, Segger tools, etc. There is support for ARM & RISCV architectures along with a collection of tools, including but not limited to:
+probe-rs 项目是一组使用各种调试探针与嵌入式 MCU 交互的工具。它类似于 openOCD、PyOCD、Segger 工具等。支持 ARM 和 RISCV 架构以及一系列工具，包括但不限于：
 
 - Debugger
-  - GDB support.
-  - CLI for interactive debugging.
-  - VSCode extension.
-- RTT (Real Time Transfer)
-  - Similar to app_trace component of IDF.
+  - GDB 支持
+  - 用于交互式调试的 CLI
+  - VSCode 扩展
+- RTT (实时传输)
+  - 类似于 IDF 的 app_trace 组件
 - Flashing algorithms
 
-More info about probe-rs & how to set up a project can be found on the [probe.rs](https://probe.rs/) website.
+有关 probe-rs 以及如何设置项目的更多信息，请访问 [probe.rs](https://probe.rs/) 网站。
 
 ## `USB-JTAG-SERIAL` peripheral for ESP32-C3
 
-Starting from `probe-rs` v0.12, it is possible to flash and debug the ESP32-C3 with the builtin `USB-JTAG-SERIAL` peripheral, no need for any external hardware debugger. More info on configuring the interface can be found in the [official documentation].
+从 `probe-rs` v0.12 开始，可以使用内置的 `USB-JTAG-SERIAL` 外设对 ESP32-C3 进行烧写和调试，无需任何外部硬件调试器。有关配置接口的更多信息可以在[官方文档]中找到。
 
-## Support for Espressif chips
+## 支持乐鑫 Espressif 芯片
 
-`probe-rs` currently only supports `ARM` & `RISC-V`, therefore this limits the number of Espressif chips that can be used at the moment.
+`probe-rs` 目前仅支持 `ARM` & `RISC-V`，因此这限制了目前可以使用的 Espressif 芯片数量。
 
 |   Chip   | Flashing | Debugging |
 | :------: | :------: | :-------: |
 | ESP32-C3 |    ✅     |     ⚠️     |
 
-**Note**: _Items marked with ⚠️ are currently work in progress, usable but expect bugs._
+**请注意**: _标有 ⚠️ 的项目目前正在进行中，可用，但可能会出现错误。_
 
-[official documentation]: https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/api-guides/jtag-debugging/configure-builtin-jtag.html
+[官方文档]: https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/api-guides/jtag-debugging/configure-builtin-jtag.html
 
-## Permissions - Linux
+## 权限 - Linux
 
-On Linux, you may run into permission issues trying to interact with Espressif probes. Installing the following `udev` rules and reloading should fix that issue.
+在 Linux 上，您可能会在尝试与 Espressif 交互时遇到权限问题。安装以下 `udev` 规则并重新加载应该可以解决该问题。
 
 ```udev
 # Espressif dev kit FTDI

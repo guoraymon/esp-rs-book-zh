@@ -1,35 +1,33 @@
-# Writing std applications
+# 编写 std 应用程序
 
-If you want to learn how to develop `std` application, there is a training developed
-alongside [Ferrous Systems]:
+如果您想学习如何开发 `std` 应用程序，可以与 [Ferrous Systems] 一起开发培训：
 
-- [Book of training]
-- [Repository of the training]
+- [培训书籍]
+- [培训代码库]
 
-The training is based on [ESP32-C3-DevKit-RUST-1]. You can use any other ESP32, ESP32-C3, ESP32-S2, or ESP32-S3 development board but code changes and configuration changes might be needed.
+培训基于 [ESP32-C3-DevKit-RUST-1]。您可以使用任何其他 ESP32、ESP32-C3、ESP32-S2 或 ESP32-S3 开发板，但可能需要更改代码和配置。
 
-The training is split into two parts:
+培训分为两部分：
 
-* [Introductory level examples]:
-   * A basic hardware-check ([Source](https://github.com/ferrous-systems/espressif-trainings/tree/main/intro/hardware-check))
-   * An HTTP Client ([Source](https://github.com/ferrous-systems/espressif-trainings/tree/main/intro/http-client))
-   * An HTTP Server ([Source](https://github.com/ferrous-systems/espressif-trainings/tree/main/intro/http-server))
-   * An MQTT Client ([Source](https://github.com/ferrous-systems/espressif-trainings/tree/main/intro/mqtt))
-* [Advanced level examples]:
-   * Low-level GPIO
-   * Interrupts in General
-   * I2C Driver ([Source](https://github.com/ferrous-systems/espressif-trainings/tree/main/advanced/i2c-driver))
-   * I2C Sensor Reading ([Source](https://github.com/ferrous-systems/espressif-trainings/tree/main/advanced/i2c-sensor-reading))
-   * GPIO/Button Interrupts ([Source](https://github.com/ferrous-systems/espressif-trainings/tree/main/advanced/button-interrupt))
-   * Driving an RGB LED
+* [入门示例]:
+   * 基本硬件检查 ([源码](https://github.com/ferrous-systems/espressif-trainings/tree/main/intro/hardware-check))
+   * HTTP 客户端 ([源码](https://github.com/ferrous-systems/espressif-trainings/tree/main/intro/http-client))
+   * HTTP 服务器 ([源码](https://github.com/ferrous-systems/espressif-trainings/tree/main/intro/http-server))
+   * MQTT 客户端 ([源码](https://github.com/ferrous-systems/espressif-trainings/tree/main/intro/mqtt))
+* [高级示例]:
+   * 底层 GPIO
+   * 通用中断
+   * I2C 驱动程序 ([源码](https://github.com/ferrous-systems/espressif-trainings/tree/main/advanced/i2c-driver))
+   * I2C 传感器读取 ([源码](https://github.com/ferrous-systems/espressif-trainings/tree/main/advanced/i2c-sensor-reading))
+   * GPIO/Button 中断 ([源码](https://github.com/ferrous-systems/espressif-trainings/tree/main/advanced/button-interrupt))
+   * 驱动 RGB LED
 
-
-> Note that there are several examples covering the use of specific peripherals under the examples folder of  `esp-idf-hal`. I.e. [`esp32-idf-hal/examples`].
+> 请注意，在 `esp-idf-hal` 的示例文件夹下有几个示例涵盖了特定外设的使用。例如 [`esp32-idf-hal/examples`]。
 
 [Ferrous Systems]: https://ferrous-systems.com/
-[Book of training]: https://espressif-trainings.ferrous-systems.com/
-[Repository of the training]: https://github.com/ferrous-systems/espressif-trainings
+[培训书籍]: https://espressif-trainings.ferrous-systems.com/
+[培训代码库]: https://github.com/ferrous-systems/espressif-trainings
 [ESP32-C3-DevKit-RUST-1]: https://github.com/esp-rs/esp-rust-board
-[Introductory level examples]: https://github.com/ferrous-systems/espressif-trainings/tree/main/intro
-[Advanced level examples]: https://github.com/ferrous-systems/espressif-trainings/tree/main/advanced
+[入门示例]: https://github.com/ferrous-systems/espressif-trainings/tree/main/intro
+[高级示例]: https://github.com/ferrous-systems/espressif-trainings/tree/main/advanced
 [`esp32-idf-hal/examples`]: https://github.com/esp-rs/esp-idf-hal/tree/master/examples

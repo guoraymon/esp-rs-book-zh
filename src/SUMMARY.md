@@ -25,8 +25,8 @@
     - [Blinky](./writing-your-own-application/no-std-applications/blinky.md)
     - [检测按钮按下](./writing-your-own-application/no-std-applications/button.md)
     - [使用中断检测按钮按下](./writing-your-own-application/no-std-applications/interrupt.md)
-  - [Writing `std` Applications](./writing-your-own-application/std-applications/index.md)
-    - [Understanding esp-idf-template](./writing-your-own-application/std-applications/understanding-esp-idf-template.md)
+  - [编写 `std` 应用程序](./writing-your-own-application/std-applications/index.md)
+    - [了解 esp-idf-template](./writing-your-own-application/std-applications/understanding-esp-idf-template.md)
 ---
 
-[Appendix A: Troubleshooting](./misc/troubleshooting.md)
+[附录 A: 故障排查](./misc/troubleshooting.md)

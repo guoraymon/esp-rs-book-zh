@@ -1,3 +1,3 @@
-# Debugging
+# 调试
 
-Debugging Rust applications is also possible using different tools that will be covered in this chapter.
+使用本章将介绍使用不同工具调试 Rust 应用程序。

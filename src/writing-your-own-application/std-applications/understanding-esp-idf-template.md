@@ -1,17 +1,17 @@
-# Understanding esp-idf-template
+# 了解 esp-idf-template
 
-Now that we know how to [generate a std project], let's inspect what the generated project contains and try to understand every part of it.
+现在我们已经知道了如何[生成 std 项目]，让我们检查生成的项目包含的内容并尝试了解它的每个部分。
 
-## Inspecting the generated Project
+## 检查生成的项目
 
-When creating a project from [esp-idf-template] using:
+使用以下选项从 [esp-idf-template] 创建项目：
 
 - MCU: `esp32c3`
 - ESP-IDF version: `v4.4`
 - STD support: `true`
 - Devcontainer support: `false`
 
-It should generate a file structure like this:
+将生成如下文件结构：
 
 ```text
 ├── build.rs
@@ -25,32 +25,32 @@ It should generate a file structure like this:
     └── main.rs
 ```
 
-Before going further let's see what these files are for.
+在继续之前，让我们看看这些文件的作用。
 
 - [.gitignore]
-    - tells `git` which folders and files to ignore
+    - 告诉 `git` 忽略哪些文件和文件夹
 - [Cargo.toml]
-    - the usual Cargo manifest declaring some meta-data and dependencies of the project
-- LICENSE-APACHE, LICENSE_MIT
-    - those are the most common licenses used in the Rust ecosystem
-    - if you want to apply a different license you can delete these files and change the license in `Cargo.toml`
+    - Cargo 元数据和项目依赖声明清单
+- `LICENSE-APACHE`，`LICENSE-MIT`
+    - 这些是 Rust 生态系统中使用最广泛的许可证
+    - 如果您想应用不同的许可证，可以删除这些文件并在 `Cargo.toml` 中更改许可证。
 - [rust-toolchain.toml]
-    - defines which Rust toolchain to use
-    - depending on your target this will use `nightly` or `esp`
+    - 定义要使用的 Rust 工具链
+    - 根据您的目标，这将使用 `nightly` 或 `esp`
 - [.cargo/config.toml]
-    - the Cargo configuration
-    - contains our target
-    - contains `runner = "espflash --monitor"` - this means you can just use `cargo run` to flash and monitor your code
-    - contains the linker to use, in our case, [`ldproxy`]
-    - contains the unstable `build-std` cargo feature enabled.
-    - contains the `ESP-IDF-VERSION` envrionment variable that tells [`esp-idf-sys`] which ESP-IDF version the project will use.
+    - Cargo 配置
+    - 包含我们的目标
+    - 包含 `runner = "espflash --monitor"` - 这意味着您可以使用 `cargo run` 来烧录和监视您的代码
+    - 包含要使用的链接器，在我们的例子中是 [`ldproxy`]
+    - 包含启用的 unstable `build-std` cargo feature。
+    - 包含 `ESP-IDF-VERSION` 环境变量，该变量告诉 [`esp-idf-sys`] 将使用哪个 ESP-IDF 版本。
 - src/main.rs
-    - the main source file of the newly created project
-    - we will examine its content in the next section
+    - 新创建项目的主源文件
+    - 我们将在下一节中分析它的内容
 - [build.rs]
-    - propagates linker arguments for `ldproxy`.
+    - 传播 `ldproxy` 的链接器参数。
 - [sdkconfig.defaults]
-    - contains the overriden values from the ESP-IDF defaults.
+    - 包含来自 ESP-IDF 默认值的覆盖值。
 
 ## `main.rs`
 
@@ -64,28 +64,29 @@ fn main() {
 
 ```
 
-The first line its an import that defines the esp-idf entry-point when the root crate is a binary crate that defines a main function.
+第一行是一个导入，它定义了 esp-idf 入口点，当根 crate 是一个定义了 main 函数的二进制 crate 时。
 
-Then, we have an usual main function with two lines on it:
+然后，我们有一个通常的 main 函数，上面有两行：
 
-- A call to `esp_idf_sys::link_patches` function that makes sure that a few patches to the ESP-IDF which are implemented in Rust are linked to the final executable.
-- We print in our console the famous "Hello World!".
+- 调用 `esp_idf_sys::link_patches` 函数，确保在 Rust 中实现的 ESP-IDF 的一些补丁链接到最终的可执行文件。
+- 我们在控制台中打印著名的“Hello World!”。
 
-## Running the Code
+## 运行代码
 
-Building and running the code is as easy as
+构建和运行代码非常简单：
 
 ```shell
 cargo run
 ```
 
-This builds the code according to the configuration and executes [`espflash`] to flash the code to the board.
+这将根据配置构建代码并执行 [`espflash`] 将代码刷入开发板。
 
-Since our [`runner` configuration] also passes the `--monitor` argument to [`espflash`] we can see what the code is printing.
+由于我们的 [`runner` 配置] 还将 `--monitor` 参数传递给 [`espflash`]，因此我们可以看到代码输出的内容。
 
-> Make sure that you have [`espflash`] installed, otherwise this step will fail. To install [`espflash`]:
+> 确保你已经安装了 [`espflash`]，否则这一步会失败。安装 [`espflash`]：
 > `cargo install espflash`
-You should see something similar to this:
+
+你应该会看到类似以下的输出：
 
 ```text
 Connecting...
@@ -166,19 +167,19 @@ I (292) cpu_start: Starting scheduler.
 Hello, world!
 ```
 
-As you can see, there are messages from the first and second stage bootloader and then, our "Hello, world!" its printed.
+如您所见，有来自第一阶段和第二阶段引导加载程序的消息，然后是我们的打印的“Hello, world!”。
 
-You can reboot with `CTRL+R` or exit with `CTRL+C`.
+您可以使用 `CTRL+R` 重新启动，或使用 `CTRL+C` 退出。
 
 [.gitignore]: https://git-scm.com/docs/gitignore
 [Cargo.toml]: https://doc.rust-lang.org/cargo/reference/manifest.html
 [rust-toolchain.toml]: https://rust-lang.github.io/rustup/overrides.html#the-toolchain-file
 [.cargo/config.toml]: https://doc.rust-lang.org/cargo/reference/config.html
-[generate a std project]: ../generate-project-from-template.md#esp-idf-template
+[生成 std 项目]: ../generate-project-from-template.md#esp-idf-template
 [esp-idf-template]: https://github.com/esp-rs/esp-idf-template
 [`esp-idf-sys`]: https://github.com/esp-rs/esp-idf-sys
 [`ldproxy`]: https://github.com/esp-rs/embuild/tree/master/ldproxy
 [build.rs]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
 [sdkconfig.defaults]: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html#custom-sdkconfig-defaults
 [`espflash`]: https://github.com/esp-rs/espflash/tree/main/espflash
-[`runner` configuration]: https://doc.rust-lang.org/cargo/reference/config.html#targettriplerunner
+[`runner` 配置]: https://doc.rust-lang.org/cargo/reference/config.html#targettriplerunner

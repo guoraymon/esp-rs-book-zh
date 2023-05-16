@@ -1,12 +1,12 @@
-# Debugging in Visual Studio Code
+# 在 Visual Studio Code 上调试
 
-There is also a possibility to debug with graphical output directly in Visual Studio Code.
+您可以直接在 Visual Studio Code 中使用图形输出进行调试。
 
 ## ESP32
 
-### Hardware Setup
+### 硬件设置
 
-ESP32 doesn't have a built-in JTAG interface so you have to connect an external JTAG adapter to the ESP32 board, for example, [ESP-Prog](https://docs.espressif.com/projects/espressif-esp-iot-solution/en/latest/hw-reference/ESP-Prog_guide.html) can be used.
+ESP32 没有内置 JTAG 接口，需要外接 JTAG 转接器到 ESP32 开发板，例如可以使用 [ESP-Prog](https://docs.espressif.com/projects/espressif-esp-iot-solution/en/latest/hw-reference/ESP-Prog_guide.html)。
 
 |  ESP32 Pin  | JTAG Signal |
 | :---------: | :---------: |
@@ -17,13 +17,13 @@ ESP32 doesn't have a built-in JTAG interface so you have to connect an external 
 |     3V3     |    VJTAG    |
 |     GND     |     GND     |
 
-**Note**: On Windows `USB Serial Converter A 0403 6010 00` driver should be WinUSB.
+**注意**：在 Windows 上 `USB 串行转换器 A 0403 6010 00` 驱动程序应该是 WinUSB。
 
-## Set up VSCode
+### VSCode 设置
 
-1. Install [Cortex-Debug](https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug) extension for VScode.
-2. Create the `.vscode/launch.json` file in the project tree you want to debug. [This](https://github.com/esp-rs/esp32-hal/blob/master/.vscode/launch.json) can be used as a template file.
-3. Update **executable**, **svdFile**, **serverpath** paths, and **toolchainPrefix** field.
+1. 为 VScode 安装 [Cortex-Debug](https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug) 扩展。
+2. 在要调试的项目中创建 `.vscode/launch.json` 文件。可以使用[这个](https://github.com/esp-rs/esp32-hal/blob/master/.vscode/launch.json)模板文件。
+3. 修改 **executable**，**svdFile**，**serverpath** 路径和 **toolchainPrefix** 字段。
 
 ```jsonc
 {
@@ -59,15 +59,15 @@ ESP32 doesn't have a built-in JTAG interface so you have to connect an external 
 
 ## ESP32-C3
 
-Older versions with **revision < 3** **don't** have built-in JTAG interface.
+**revision < 3** **没有**内置 JTAG 接口。
 
-ESP32-C3 with **revision 3** **does** have a built-in JTAG interface and you don't have to connect an external device to be able to debug. To get the chip revision, run the `cargo espflash board-info` command.
+**revision 3** **具有**内置 JTAG 接口，您无需连接外部设备即可进行调试。要获取芯片版本，请运行 `cargo espflash board-info` 命令。
 
-### Hardware Setup
+### 硬件设置
 
-If your ESP32-C3's revision is lesser than 3, follow these instructions, if you have revision 3 you can jump to the [**Set up VSCode**](#set-up-vscode-1) step.
+如果您的 ESP32-C3 的版本小于 3，请按照这些说明进行操作，如果您的版本为 3，则可以跳转到[**VSCode 设置**](#vscode-设置-1)。
 
-ESP32-C3 **revision 1** and **revision 2** don't have a built-in JTAG interface so you have to connect an external JTAG adapter to the ESP32-C3 board, for example, [ESP-Prog](https://docs.espressif.com/projects/espressif-esp-iot-solution/en/latest/hw-reference/ESP-Prog_guide.html) can be used.
+ESP32-C3 **版本 1** 和**版本 2** 没有内置 JTAG 接口，因此您必须将外部 JTAG 适配器连接到 ESP32-C3 板，例如，可以使用 [ESP-Prog](https://docs.espressif.com/projects/espressif-esp-iot-solution/en/latest/hw-reference/ESP-Prog_guide.html)。
 
 | ESP32-C3 Pin | JTAG Signal |
 | :----------: | :---------: |
@@ -78,13 +78,13 @@ ESP32-C3 **revision 1** and **revision 2** don't have a built-in JTAG interface 
 |     3V3      |    VJTAG    |
 |     GND      |     GND     |
 
-**Note**: On Windows `USB Serial Converter A 0403 6010 00` driver should be WinUSB.
+**注意**：在 Windows 上 `USB 串行转换器 A 0403 6010 00` 驱动程序应该是 WinUSB。
 
-### Set up VSCode
+### VSCode 设置
 
-1. Install [Cortex-Debug](https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug) extension for VScode.
-2. Create the `.vscode/launch.json` file in the project tree you want to debug. [This](https://github.com/esp-rs/esp32-hal/blob/master/.vscode/launch.json) can be used as a template file.
-3. Update **executable**, **svdFile**, **serverpath** paths, and **toolchainPrefix** field.
+1. 为 VScode 安装 [Cortex-Debug](https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug) 扩展。
+2. 在要调试的项目中创建 `.vscode/launch.json` 文件。可以使用[这个](https://github.com/esp-rs/esp32-hal/blob/master/.vscode/launch.json)模板文件。
+3. 修改 **executable**，**svdFile**，**serverpath** 路径和 **toolchainPrefix** 字段。
 
 ```jsonc
 {
